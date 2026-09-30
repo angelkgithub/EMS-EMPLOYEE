@@ -1,0 +1,14 @@
+{
+  "name": "EMS Team Hub",
+  "short_name": "EMS Hub",
+  "description": "Tools, training and team directory for East Medical Supplies employees.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F3F5F9",
+  "theme_color": "#00285E",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

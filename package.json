@@ -1,0 +1,11 @@
+{
+  "name": "ems-team-hub",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Internal team hub for East Medical Supplies: tools and links, training, org chart and house rules.",
+  "scripts": {
+    "dev": "npx serve public -l 3000",
+    "check": "node scripts/check.mjs"
+  }
+}
