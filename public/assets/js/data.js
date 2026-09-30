@@ -37,7 +37,7 @@ const GROUPS = [
 const DEFAULT_PINS = ["leads","orders","payment","bible"];
 
 const VIDEOS = [
-  { title:"Cold calling for B2B sales", youtube:"",   /* paste the full YouTube link */ notes:"Watch this before your first day on the phones." }
+  { title:"Cold calling for B2B sales", youtube:"https://youtu.be/17SF_CBE2Pg?si=BNmSeSNTMbZbVn84",  notes:"Watch this before your first day on the phones." }
 ];
 const RECORDINGS = [
   { title:"Sample call 1", agent:"[Agent name]", src:"", notes:"[What makes this call a good example]" },
