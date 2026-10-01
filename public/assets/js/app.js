@@ -160,6 +160,7 @@ document.addEventListener("error", e => { const t=e.target; if(t && t.tagName===
       ? `<a class="btn btn-primary" href="${esc(RULES_PDF.url)}" target="_blank" rel="noopener">Open PDF<svg><use href="#i-ext"/></svg></a><a class="btn btn-ghost" href="${esc(RULES_PDF.url)}" download>Download<svg><use href="#i-dl"/></svg></a>`
       : `<span class="pending">PDF not added yet</span>`;
     $("#acc").innerHTML=RULE_SECTIONS.map((s,i)=>`<div class="acc-item"><button type="button" aria-expanded="false" aria-controls="accp-${i}" id="acch-${i}">${esc(s.title)}<svg><use href="#i-chev"/></svg></button><div class="acc-panel" id="accp-${i}" role="region" aria-labelledby="acch-${i}"><div><p>${esc(s.body)}</p></div></div></div>`).join("");
+    $("#pdfView").innerHTML = RULES_PDF.url ? `<iframe src="${esc(RULES_PDF.url)}#view=FitH" title="EMS House Rules PDF"></iframe>` : "";
     $$("#acc button").forEach(b=>b.onclick=()=>{ const open=b.getAttribute("aria-expanded")==="true"; b.setAttribute("aria-expanded",!open); b.parentElement.classList.toggle("open",!open); });
     const ack=store.get("ack",null); $("#ackBox").checked=!!ack; $("#ackNote").textContent=ack?`Confirmed on ${ack}. Saved on this device only.`:"Saved on this device only";
   }

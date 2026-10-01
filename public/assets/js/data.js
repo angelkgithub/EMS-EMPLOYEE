@@ -26,7 +26,6 @@ const TOOLS = [
       { label:"Canva", type:"canva", url:"https://www.canva.com/design/DAHUKsE4iQ4/2g6uZ6ndDIhj5Qv_Qc3gTg/edit" },
       { label:"PDF",   type:"pdf",   url:"https://drive.google.com/file/d/1xHJ25jtRk9pafLpFW7A_Se06DZXMApJk/view?usp=sharing" }
     ] },
-  { id:"contacts", name:"Contact Information",                group:"reference", type:"sheet", desc:"Company and team contact details.", url:"https://docs.google.com/spreadsheets/d/1BL-ij9-TW7IOF1LcN1w5MHB9XnC4TZRHIqWRRL3HSWQ/edit?gid=0#gid=0" }
 ];
 const GROUPS = [
   { id:"sales", name:"Sales and leads" },
@@ -60,7 +59,8 @@ const ORG = P("Robert James","Owner","Leadership","","Jan 23, 1986","","",{ orig
       P("Rowiel Alday","Team Leader","Sales","rex.helpingdiabetics@gmail.com","Sep 11, 1999","Aug 18, 2026")
     ]}),
     P("Jonil Abenir (Juju)","Trainer","Training","jon.helpingdiabetics@gmail.com","Nov 16, 1989","Aug 4, 2026"),
-    P("Jayvee Panganiban","Secretary / QA","Admin","jayvee.helpingdiabetics@gmail.com","","Aug 5, 2026")
+    P("Jayvee Panganiban","Secretary / QA","Admin","jayvee.helpingdiabetics@gmail.com","","Aug 5, 2026"),
+    P("Lord Marco P. Ilustrisimo","FB Ads Manager","Marketing","maykotrisimo6@gmail.com","Mar 21, 1996","Aug 15, 2026")
   ]})
 ]});
 
@@ -76,7 +76,7 @@ const SALES_TEAM = [
   P("Angel Jan Katigbak","Sales Rep / Software Dev","Sales","angelhelpingdiabetics@gmail.com","Sep 5, 2005","Aug 17, 2026")
 ];
 
-const RULES_PDF = { url:"", updated:"" };   // e.g. url:"/assets/docs/house-rules.pdf", updated:"Sep 2026"
+const RULES_PDF = { url:"/assets/docs/house-rules.pdf", updated:"" };   // e.g. url:"/assets/docs/house-rules.pdf", updated:"Sep 2026"
 const RULE_SECTIONS = [
   { title:"Working hours and attendance", body:"[Copy this section from the house rules PDF.]" },
   { title:"Communication with clients", body:"[Copy this section from the house rules PDF.]" },
