@@ -108,11 +108,12 @@ kbd{font:inherit;font-size:.78rem;font-weight:650;padding:3px 8px;border-radius:
 
 /* ---------- Home ---------- */
 .ecg{display:block;width:100%;height:70px;margin:18px 0 8px}
-.ecg path{fill:none;stroke:var(--pulse);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:trace 2.2s .2s var(--ease) forwards}
+.ecg path{fill:none;stroke:var(--pulse);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;animation:trace 4.4s var(--ease) infinite}
 .ecg .base{stroke:var(--line);stroke-width:1.5;stroke-dasharray:none;animation:none}
-.ecg circle{fill:var(--pulse);opacity:0;transform-box:fill-box;transform-origin:center;animation:dot .6s 2.3s var(--ease) forwards}
-@keyframes trace{to{stroke-dashoffset:0}}
-@keyframes dot{0%{opacity:0;transform:scale(.3)}55%{opacity:1;transform:scale(1.7)}100%{opacity:1;transform:scale(1)}}
+.ecg circle{fill:var(--pulse);opacity:0;transform-box:fill-box;transform-origin:center;animation:dot 4.4s var(--ease) infinite}
+/* Loop: draw the trace, hold, fade out, repeat. The dot pings when the line reaches it. */
+@keyframes trace{0%{stroke-dashoffset:1;opacity:1}50%,85%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes dot{0%,48%{opacity:0;transform:scale(.3)}56%{opacity:1;transform:scale(1.7)}64%,85%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
 .home-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:start}
 .quick{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
 .qtile{display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:var(--r-m);border:1px solid var(--line);background:var(--bg);text-decoration:none;color:var(--ink);cursor:pointer;text-align:left;min-height:118px;transition:border-color .2s,transform .2s var(--ease),box-shadow .2s}
@@ -311,8 +312,8 @@ kbd{font:inherit;font-size:.78rem;font-weight:650;padding:3px 8px;border-radius:
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0ms!important;transition-duration:.01ms!important}
-  .ecg path{stroke-dashoffset:0}
-  .ecg circle{opacity:1}
+  .ecg path{stroke-dashoffset:0;animation:none}
+  .ecg circle{opacity:1;animation:none}
 }
 
 /* 404 page */
@@ -330,3 +331,22 @@ kbd{font:inherit;font-size:.78rem;font-weight:650;padding:3px 8px;border-radius:
 /* Logo swap for a manual choice (the rules above only cover "follow the device") */
 :root[data-theme="dark"] .top-logo .logo-l,:root[data-theme="dark"] .nf .logo-l{display:none}
 :root[data-theme="dark"] .top-logo .logo-d,:root[data-theme="dark"] .nf .logo-d{display:block}
+
+/* Org chart: full-width page, photo slots, owner pair, sales grid */
+.content:has(.page-wide.active){max-width:none}
+.page-wide .org-wrap{padding:24px 12px 28px}
+.person{width:176px;padding:16px 10px}
+.person .avatar{width:84px;height:84px;font-size:1.4rem}
+.pair{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.tree > li > ul::before{content:"";position:absolute;top:0;left:50%;height:24px;border-left:2px solid var(--line)}
+.agents{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px;justify-items:center}
+.agents .person{width:100%;max-width:220px}
+@media (max-width:760px){
+  .tree > li > ul::before{display:none}
+  .pair{flex-direction:column;align-items:stretch;gap:10px}
+  .pair .person{max-width:none}
+  .person{padding:12px}
+  .person .avatar{width:56px;height:56px;font-size:1.05rem}
+  .agents{grid-template-columns:1fr}
+  .agents .person{max-width:none}
+}

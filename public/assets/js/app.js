@@ -1,6 +1,6 @@
 "use strict";
 /* EMS Team Hub. Content lives in assets/js/data.js; this file is the behavior. */
-const { TOOLS, GROUPS, DEFAULT_PINS, VIDEOS, RECORDINGS, ORG, RULES_PDF, RULE_SECTIONS } = window.EMS_DATA;
+const { TOOLS, GROUPS, DEFAULT_PINS, VIDEOS, RECORDINGS, ORG, SALES_TEAM, RULES_PDF, RULE_SECTIONS } = window.EMS_DATA;
 
 /* Images can't use inline onerror under our Content-Security-Policy, so failed images are removed here. */
 document.addEventListener("error", e => { const t=e.target; if(t && t.tagName==="IMG" && t.hasAttribute("data-fallback")) t.remove(); }, true);
@@ -133,18 +133,20 @@ document.addEventListener("error", e => { const t=e.target; if(t && t.tagName===
   }
 
   /* ---------- Org chart ---------- */
-  const people=[]; (function walk(p,parent){ p._id=people.length; p._parent=parent; people.push(p); (p.children||[]).forEach(c=>walk(c,p)); })(ORG,null);
-  const initials=p=>{ const n=p.name.replace(/[\[\]]/g,"").trim(); if(!n||n==="Name") return p.role.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase(); return n.split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase(); };
+  const people=[]; (function walk(p,parent){ p._id=people.length; p._parent=parent; people.push(p); if(p.partner) walk(p.partner,null); (p.children||[]).forEach(c=>walk(c,p)); })(ORG,null);
+  SALES_TEAM.forEach(a=>{ a._reports="Team Leaders"; people.push(a); a._id=people.length-1; });
+  const initials=p=>{ const n=p.name.replace(/\(.*?\)/g,"").replace(/[\[\]]/g,"").trim(); if(!n||n==="Name") return p.role.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase(); return n.split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase(); };
   const avatar=p=>`<span class="avatar"><span aria-hidden="true">${initials(p)}</span>${p.photo?`<img src="${esc(p.photo)}" alt="" loading="lazy" data-fallback>`:""}</span>`;
-  function orgNode(p,depth){ return `<li><button class="person ${depth<2&&p.children?"lead":""}" type="button" data-pid="${p._id}" style="animation-delay:${depth*120}ms">${avatar(p)}<span class="who"><strong>${esc(p.name)}</strong><span>${esc(p.role)}</span></span></button>${p.children?`<ul>${p.children.map(c=>orgNode(c,depth+1)).join("")}</ul>`:""}</li>`; }
-  function renderOrg(){ $("#tree").innerHTML=orgNode(ORG,0); $$("[data-pid]").forEach(b=>b.onclick=()=>openPerson(+b.dataset.pid,b)); }
+  const card=(p,cls)=>`<button class="person ${cls||""}" type="button" data-pid="${p._id}">${avatar(p)}<span class="who"><strong>${esc(p.name)}</strong><span>${esc(p.role)}</span></span></button>`;
+  function orgNode(p,depth){ return `<li>${p.partner?`<div class="pair">${card(p,"lead")}${card(p.partner,"lead")}</div>`:card(p,depth<3&&p.children?"lead":"")}${p.children?`<ul>${p.children.map(c=>orgNode(c,depth+1)).join("")}</ul>`:""}</li>`; }
+  function renderOrg(){ $("#tree").innerHTML=orgNode(ORG,0); $("#agents").innerHTML=SALES_TEAM.map(a=>card(a)).join(""); $$("[data-pid]").forEach(b=>b.onclick=()=>openPerson(+b.dataset.pid,b)); }
   const drawer=$("#person"), scrim=$("#scrim"), appRoot=$(".app"); let returnFocus=null;
   const lock=on=>{ appRoot.inert=on; };
   function openPerson(id,from){
     const p=people[id]; returnFocus=from||document.activeElement;
     const row=(k,v)=>`<div><dt>${k}</dt><dd>${v}</dd></div>`;
     $("#personBody").innerHTML=`${avatar(p)}<h2 style="font-size:1.6rem">${esc(p.name)}</h2><p class="muted" style="margin-top:4px">${esc(p.role)}</p>
-      <dl class="facts">${row("Department",esc(p.dept||"—"))}${row("Reports to",p._parent?`${esc(p._parent.name)}, ${esc(p._parent.role)}`:"—")}${row("Email",p.email?`<a href="mailto:${esc(p.email)}">${esc(p.email)}</a>`:`<span class="placeholder">[Email]</span>`)}${row("Phone",p.phone?`<a href="tel:${esc(p.phone)}">${esc(p.phone)}</a>`:`<span class="placeholder">[Phone]</span>`)}</dl>`;
+      <dl class="facts">${row("Department",esc(p.dept||"—"))}${row("Reports to",p._parent?`${esc(p._parent.name)}, ${esc(p._parent.role)}`:esc(p._reports||"—"))}${row("Work email",p.email?`<a href="mailto:${esc(p.email)}">${esc(p.email)}</a>`:`<span class="placeholder">[Email]</span>`)}${row("Birthday",p.birthday?esc(p.birthday):"—")}${row("Start date",p.start?esc(p.start):"—")}${p.origin?row("From",esc(p.origin)):""}</dl>`;
     lock(true); drawer.classList.add("open"); drawer.setAttribute("aria-hidden","false"); scrim.classList.add("show"); $("#closePerson").focus();
   }
   function closePerson(){ lock(false); drawer.classList.remove("open"); drawer.setAttribute("aria-hidden","true"); if(!side.classList.contains("open")) scrim.classList.remove("show"); if(returnFocus) returnFocus.focus(); }

@@ -45,19 +45,36 @@ const RECORDINGS = [
   { title:"Sample call 3", agent:"[Agent name]", src:"", notes:"[What makes this call a good example]" }
 ];
 
-/* Sample structure. Replace names, roles and details when ready. photo: image URL or "". */
-const ORG = { name:"[Name]", role:"Owner", dept:"Leadership", email:"", phone:"", photo:"", children:[
-  { name:"[Name]", role:"Sales manager", dept:"Sales", email:"", phone:"", photo:"", children:[
-    { name:"[Name]", role:"Sales agent", dept:"Sales", email:"", phone:"", photo:"" },
-    { name:"[Name]", role:"Sales agent", dept:"Sales", email:"", phone:"", photo:"" },
-    { name:"[Name]", role:"Sales agent", dept:"Sales", email:"", phone:"", photo:"" }
-  ]},
-  { name:"[Name]", role:"Operations manager", dept:"Operations", email:"", phone:"", photo:"", children:[
-    { name:"[Name]", role:"Order processing", dept:"Operations", email:"", phone:"", photo:"" },
-    { name:"[Name]", role:"Inventory", dept:"Operations", email:"", phone:"", photo:"" }
-  ]},
-  { name:"[Name]", role:"Accounting", dept:"Admin", email:"", phone:"", photo:"" }
-]};
+/* Org chart. Owner and Co-Owner sit side by side at the top (partner), then OM, then TM.
+   photo: put each picture in /assets/team/ and set e.g. "/assets/team/roy-caringal.jpg". Leave "" until you have it.
+   Addresses are intentionally not stored. */
+const P=(name,role,dept,email,birthday,start,photo,extra)=>Object.assign({ name, role, dept, email, birthday, start, photo:photo||"" },extra);
+
+const ORG = P("Robert James","Owner","Leadership","","Jan 23, 1986","","",{ origin:"Ohio",
+  partner:P("Fredrick James","Co-Owner","Leadership","","Dec 28, 1990","","",{ origin:"Ohio" }),
+  children:[
+  P("Roy Marc Caringal","Operations Manager (OM)","Operations","roy.helpingdiabetics@gmail.com","May 31, 1989","Aug 3, 2026","",{ children:[
+    P("Kareen Myles C. Barrera","Team Manager (TM)","Sales","myles.eastmedsupplies@gmail.com","Jun 26, 1988","","",{ children:[
+      P("Angelus Clemeth Ablaza","Team Leader / Supervisor","Sales","angelusclemeth.helpingdiabetics@gmail.com","Nov 5, 1990","Aug 14, 2026"),
+      P("Arvin Jay Romero","Team Leader","Sales","arvin.helpingdiabetics@gmail.com","Apr 11, 1998",""),
+      P("Rowiel Alday","Team Leader","Sales","rex.helpingdiabetics@gmail.com","Sep 11, 1999","Aug 18, 2026")
+    ]}),
+    P("Jonil Abenir (Juju)","Trainer","Training","jon.helpingdiabetics@gmail.com","Nov 16, 1989","Aug 4, 2026"),
+    P("Jayvee Panganiban","Secretary / QA","Admin","jayvee.helpingdiabetics@gmail.com","","Aug 5, 2026")
+  ]})
+]});
+
+/* Sales team. Team Leader assignments aren't set yet, so they are shown together under the Team Leaders. */
+const SALES_TEAM = [
+  P("Jeniel Andrew Sarmiento","Agent","Sales","andygarcia.helpingdiabetics@gmail.com","Mar 23, 1990","Sep 14, 2026"),
+  P("Klydine Claire Z. Morales","Sales Agent","Sales","klydhelpingdiabetics@gmail.com","Mar 3, 1990","Aug 14, 2026"),
+  P("Maria Fatima Vengco (Patch)","Sales Representative","Sales","patch.helpingdiabetics@gmail.com","Oct 12, 1991","Sep 14, 2026"),
+  P("Joselito Jr Bercasio","Sales Representative","Sales","jbercasio.helpingdiabetics@gmail.com","Aug 26, 1988","Aug 6, 2026"),
+  P("Edward Alexes Engbino","Sales Representative","Sales","Edward.helpingdiabetics@gmail.com","Sep 13, 1987","Aug 20, 2026"),
+  P("Albert Paubsanon","Sales Representative","Sales","albert.helpingdiabetics@gmail.com","Jul 18, 1987",""),
+  P("Francis Meldrin Daya","Sales Representative","Sales","francis.helpingdiabetics@gmail.com","Apr 13, 1993","Sep 14, 2026"),
+  P("Angel Jan Katigbak","Sales Rep / Software Dev","Sales","angelhelpingdiabetics@gmail.com","Sep 5, 2005","Aug 17, 2026")
+];
 
 const RULES_PDF = { url:"", updated:"" };   // e.g. url:"/assets/docs/house-rules.pdf", updated:"Sep 2026"
 const RULE_SECTIONS = [
@@ -67,5 +84,5 @@ const RULE_SECTIONS = [
   { title:"Workplace conduct", body:"[Copy this section from the house rules PDF.]" }
 ];
 
-window.EMS_DATA = { TOOLS, GROUPS, DEFAULT_PINS, VIDEOS, RECORDINGS, ORG, RULES_PDF, RULE_SECTIONS };
+window.EMS_DATA = { TOOLS, GROUPS, DEFAULT_PINS, VIDEOS, RECORDINGS, ORG, SALES_TEAM, RULES_PDF, RULE_SECTIONS };
 })();
