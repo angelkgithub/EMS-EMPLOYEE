@@ -6,3 +6,5 @@ node_modules
 .taste-skill
 .playwright
 .playwright-cli
+# Playwright CLI output (may contain credentials)
+.playwright-cli/
