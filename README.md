@@ -1,6 +1,6 @@
-# EMS Team Hub
+# MIL CITY Team Hub
 
-Internal site for East Medical Supplies employees: tools and links, training videos and call recordings, org chart, and house rules.
+Internal site for MIL CITY Medical employees: tools and links, training videos and call recordings, org chart, and house rules.
 
 It is a plain static site (HTML, CSS, JavaScript). There is no build step and nothing to install, so it deploys to Vercel in about two minutes.
 
@@ -14,13 +14,17 @@ public/                     Everything the website serves
     js/data.js              ← YOUR CONTENT. The only file you normally edit.
     js/app.js               Site behavior. Leave alone.
     css/styles.css          Design. Leave alone unless changing the look.
-    img/                    Logos (light and dark versions)
+    brand/                  MIL CITY logos (light and dark), cropped from brand-source/
     audio/                  Put the sample call MP3s here
     team/                   Put employee photos here
     docs/                   Put the house rules PDF here
+brand-source/               The master MIL CITY logo sheet
+DESIGN.md                   Colours, type and component rules
+REVISION_NOTES.md           What changed in the MIL CITY revision
 vercel.json                 Vercel settings and security headers
 middleware.example.js       Optional password gate (see "Keeping it private")
 scripts/check.mjs           Pre-deploy checker (npm run check)
+scripts/make-logo-assets.py Rebuilds the logo crops and icons from the master sheet
 ```
 
 ## Deploy to Vercel
@@ -30,7 +34,7 @@ scripts/check.mjs           Pre-deploy checker (npm run check)
 1. Create a **private** repository on GitHub and upload this whole folder.
 2. Go to <https://vercel.com/new>, import the repository.
 3. Leave **Framework Preset** as "Other". Don't change any build settings; `vercel.json` already sets them.
-4. Click **Deploy**. You get an address like `ems-team-hub.vercel.app`.
+4. Click **Deploy**. You get an address like `milcity-team-hub.vercel.app`.
 
 **Option B: Vercel CLI**
 
@@ -50,13 +54,14 @@ Open `public/assets/js/data.js`. Every list in it has comments explaining the fi
 
 | To add | Do this |
 |---|---|
-| A Google Sheet, Canva or app link | Paste the full `https://…` address into that tool's `url:` |
+| A Google Sheet, Form or app link | Paste the full `https://…` address into that tool's `url:` |
+| Mark a link "To be updated" | Add `status:"update"` to that tool (remove it once the sheet is final) |
 | Another tool | Copy an existing block, give it a new unique `id`, pick a `group` |
 | The cold calling video | Paste the YouTube link into `youtube:` |
 | Sample call recordings | Save the MP3 into `public/assets/audio/`, then set `src:"/assets/audio/your-file.mp3"` |
 | Employee photos | Save into `public/assets/team/`, set `photo:"/assets/team/name.jpg"` (square, at least 200 px) |
 | House rules PDF | Save into `public/assets/docs/`, set `url:"/assets/docs/house-rules.pdf"` |
-| Org chart people | Edit `ORG`. Each person has `children:[ … ]` for who reports to them |
+| Org chart people | Edit `ORG`. Each person has `children:[ … ]` for who reports to them. Add `phone:` and `designation:` in the last `{ }` |
 
 Anything you leave as `""` shows "Link not added yet" instead of a broken button, so you can publish before everything is ready.
 
@@ -95,6 +100,6 @@ The site also sets `noindex` (meta tag, header and `robots.txt`) so search engin
 ## Good to know
 
 - **Checklists are per device.** The "New here?" steps, "Listened" boxes, starred tools and "I've read the house rules" box save in the browser only. They don't sync between devices and you can't see who ticked what. If you need a record of who acknowledged the rules, link a Google Form instead.
-- **Logo:** the current file is small. Replace `public/assets/img/logo-light.png` and `logo-dark.png` with larger versions (or ask for an SVG) and it will look sharper on high-resolution screens. Keep the same file names.
+- **Logo:** the crops in `public/assets/brand/` come from `brand-source/milcity-logo-sheet.png`. To change them, replace that image and run `python3 scripts/make-logo-assets.py public/assets/brand`.
 - **Search shortcut:** `Ctrl K` (or `⌘ K` on Mac) opens search from any page.
 - **Browsers:** current Chrome, Edge, Safari and Firefox. Dark mode follows the device setting.

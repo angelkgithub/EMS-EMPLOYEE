@@ -1,0 +1,75 @@
+# DESIGN.md: MIL CITY Team Hub
+
+The source of truth for how the hub looks. Tokens live at the top of `public/assets/css/styles.css`.
+
+## 1. Visual theme
+
+A calm, trustworthy internal tool for a medical sales team. Navy carries the brand, pulse red is a signal, and silver stays in the logo. The pages are flat, quiet and dense enough to work from all day. The one brand moment is the logo and the ECG pulse line on the home page, which echoes the pulse in the logo.
+
+## 2. Colour palette and roles
+
+| Role | Light | Dark | Use |
+|---|---|---|---|
+| `--bg` ground | `#EEF2F7` | `#08101F` | Page background |
+| `--surface` | `#FFFFFF` | `#0F1A30` | Panels, cards, sidebar. Separated from the ground by tone, not lines |
+| `--soft` | `#E8EDF5` | `#16233F` | Hover, active nav, chips |
+| `--ink` | `#0B1A33` | `#E8EDF6` | All running text |
+| `--muted` | `#4A5672` | `#A3AFC7` | Secondary text only |
+| `--accent` (logo navy) | `#0B2A5B` | `#9DBBF0` | Primary buttons, links, the Order Form tile |
+| `--pulse` (logo red) | `#C8102E` | `#F2606B` | Focus ring, active nav marker, ECG line, "New" label |
+| `--warn` | `#B7791F` | `#F0B44C` | "To be updated" dot |
+| `--silver` | `#8C96A8` | | Reserved for the logo |
+
+Contrast (WCAG): ink on ground 15.4:1, muted on ground 6.5:1, white on navy 14.0:1, red on white 5.9:1, dark ink on dark ground 16.2:1, dark muted 7.9:1, dark accent button 9.3:1. All pass AA.
+
+## 3. Typography
+
+One family: **Archivo** (Google Fonts, `display=swap`).
+
+| Level | Size | Weight |
+|---|---|---|
+| Page title (`h1`, one per page) | 26–32px | 760, tracking -0.02em |
+| Section title (`h2`) | 20px | 700 |
+| Card title (`h3`) | 17px | 680 |
+| Body | 16px, line height 1.55 | 400 |
+| Caption | 13–14px | 560 |
+
+Phone numbers and dates use tabular figures (`.num`). No italics in headings, no tracked uppercase labels.
+
+## 4. Components
+
+- **Buttons:** fully round. Primary = navy fill. Ghost = 1.5px outline. On a navy card, the light button (`.btn-light`). Hover darkens or tints; `:active` scales to 0.97; disabled is 50% opacity.
+- **Tool cards:** white surface on the ground, no outline. The Order Form card is filled navy (`primary:true` in data.js). Every external link opens in a new tab, says so to screen readers, and shows the external-link icon.
+- **Quick-access tiles:** tone step inside the panel, two columns. Real links, so middle-click and copy link work.
+- **Status labels:** a coloured dot plus text, never colour alone. "To be updated" (amber dot) and "New" (red, automatic for 30 days after a start date).
+- **Org chart cards:** initials on navy, or a photo when added. Owners and the OM have a red top edge. Cards open a drawer with email, phone, birthday (month and day) and start date, plus Email and Call buttons.
+- **Inputs:** 1.5px outline, navy focus ring.
+- **Nav:** sidebar with the MC lockup, five links, red marker on the current page. On phones it becomes a drawer with the horizontal wordmark in the top bar.
+
+## 5. Layout and spacing
+
+Content max-width 1200px (the org chart page runs full width). Side padding 20–48px. Spacing steps 4 / 8 / 12 / 16 / 24 / 32 / 40px. Radii: 8px small, 14px cards, 22px panels.
+
+## 6. Depth
+
+No shadows on anything at rest. Only real overlays (person drawer, search dialog, mobile menu) cast a shadow. Surfaces separate by tone.
+
+## 7. Do and don't
+
+Do: navy for actions, red only as a signal, flat colour, full-ink body text, labels with words.
+Don't: gradients, glass or blur, emoji, icon chips in tinted squares, 1px outlined boxes, more than one typeface, em-dash heavy copy.
+
+## 8. Responsive
+
+Breakpoints 1060 (home goes to one column), 900 (sidebar becomes a drawer), 760 (org chart becomes an indented list), 560 (tool cards go single column). Touch targets 44px minimum. Checked at 375, 390, 768, 1024 and 1440 with no sideways scrolling.
+
+## 9. Logo usage
+
+| File (`public/assets/brand/`) | Where |
+|---|---|
+| `milcity-stack-*.png` (MC monogram over the wordmark) | Sidebar |
+| `milcity-word-*.png` (MIL + CITY wordmark) | Phone top bar, OG image |
+| `milcity-badge-*.png` (circular skyline badge) | 404 page |
+| Cross mark | Favicon and app icons |
+
+Each has a `-light` (navy, for light backgrounds) and `-dark` (white, for dark mode) version.

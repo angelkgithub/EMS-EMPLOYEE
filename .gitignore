@@ -4,3 +4,5 @@ node_modules
 .env
 .env.local
 .taste-skill
+.playwright
+.playwright-cli
