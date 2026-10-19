@@ -11,12 +11,12 @@ A calm, trustworthy internal tool for a medical sales team. Navy carries the bra
 | Role | Light | Dark | Use |
 |---|---|---|---|
 | `--bg` ground | `#EEF2F7` | `#08101F` | Page background |
-| `--surface` | `#FFFFFF` | `#0F1A30` | Panels, cards, sidebar. Separated from the ground by tone, not lines |
-| `--soft` | `#E8EDF5` | `#16233F` | Hover, active nav, chips |
+| `--surface` | `#FFFFFF` | `#0F1A30` | Panels, cards, the nav pill. Separated from the ground by tone, not lines |
+| `--soft` | `#E8EDF5` | `#16233F` | Hover on nav pills, chips |
 | `--ink` | `#0B1A33` | `#E8EDF6` | All running text |
 | `--muted` | `#4A5672` | `#A3AFC7` | Secondary text only |
 | `--accent` (logo navy) | `#0B2A5B` | `#9DBBF0` | Primary buttons, links, the Order Form tile |
-| `--pulse` (logo red) | `#C8102E` | `#F2606B` | Focus ring, active nav marker, ECG line, "New" label |
+| `--pulse` (logo red) | `#C8102E` | `#F2606B` | Focus ring, ECG line, "New" label |
 | `--warn` | `#B7791F` | `#F0B44C` | "To be updated" dot |
 | `--silver` | `#8C96A8` | | Reserved for the logo |
 
@@ -44,7 +44,7 @@ Phone numbers and dates use tabular figures (`.num`). No italics in headings, no
 - **Status labels:** a coloured dot plus text, never colour alone. "To be updated" (amber dot) and "New" (red, automatic for 30 days after a start date).
 - **Org chart cards:** initials on navy, or a photo when added. Owners and the OM have a red top edge. Cards open a drawer with email, phone, birthday (month and day) and start date, plus Email and Call buttons.
 - **Inputs:** 1.5px outline, navy focus ring.
-- **Nav:** sidebar with the MC lockup, five links, red marker on the current page. On phones it becomes a drawer with the horizontal wordmark in the top bar.
+- **Nav:** a top bar with the wordmark left, a rounded pill track in the middle (five links, the current page filled navy) and Search and theme buttons right. There is no sidebar. On phones the pill becomes a menu popover opened from the menu button.
 
 ## 5. Layout and spacing
 

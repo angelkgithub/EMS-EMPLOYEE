@@ -12,7 +12,7 @@ public/                     Everything the website serves
   404.html                  Branded "page not found"
   assets/
     js/data.js              ← YOUR CONTENT. The only file you normally edit.
-    js/app.js               Site behavior. Leave alone.
+    js/main.js              Site behavior (plus the other modules in js/). Leave alone.
     css/styles.css          Design. Leave alone unless changing the look.
     brand/                  MIL CITY logos (light and dark), cropped from brand-source/
     audio/                  Put the sample call MP3s here

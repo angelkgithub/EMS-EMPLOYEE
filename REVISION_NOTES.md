@@ -70,3 +70,11 @@ Starred tools now use a new saved key (`pins-v2`), so everyone starts with the f
 - Added Playwright and axe (`npm test`, `tests/hub.spec.js`, `playwright.config.js`). 16 tests cover links, org chart, privacy, brand, layout, keyboard, dark mode and accessibility in both themes.
 - First run found one real accessibility issue: the search button's `aria-label` did not match its visible text. Removed the label so the visible text names the button.
 - First run of Chromium needs `npx playwright install chromium`.
+
+### Phase 2: modern JavaScript, and a new top nav
+- Removed the sidebar. The five links are now a rounded pill nav in the top bar (current page filled navy). On phones it is a native `popover` opened from the menu button. The "employees only" notice moved to the footer.
+- `app.js` is gone. Behaviour is split into ES modules in `public/assets/js/`: `main.js` (entry), `router.js`, `home.js`, `tools.js`, `training.js`, `org.js`, `rules.js`, `search.js`, `nav.js`, plus `store.js` (reads `window.MILCITY_DATA`, saved state) and `util.js` (shared helpers; not in the plan's list). `data.js` and `theme.js` are unchanged.
+- The search palette and person drawer are native `<dialog>` elements (`showModal()`): focus trap, Escape and inert background are built in, and the hand-written scrim/inert/focus-return code is deleted. The slide-in uses `@starting-style` and `transition-behavior: allow-discrete`.
+- Page changes use `document.startViewTransition`, with an instant switch when it is unsupported or reduced motion is on.
+- Click wiring uses one delegated listener per section (`data-action`). `esc()` still wraps every value from `data.js`.
+- Tests updated for the new markup (dialog `open` attribute, popover menu). 16/16 pass, console clean.

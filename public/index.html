@@ -25,7 +25,7 @@
 <link rel="stylesheet" href="/assets/css/styles.css">
 <link rel="preload" as="image" href="/assets/brand/milcity-stack-light.png" media="(min-width:901px) and (prefers-color-scheme:light)">
 <script src="/assets/js/data.js" defer></script>
-<script src="/assets/js/app.js" defer></script>
+<script type="module" src="/assets/js/main.js"></script>
 <script src="/assets/js/theme.js"></script>
 </head>
 <body>
@@ -63,31 +63,24 @@
 </svg>
 
 <div class="app">
-  <aside class="side" id="side" aria-label="Sidebar">
-    <a class="logo" href="#home" aria-label="MIL CITY Team Hub home">
-      <img class="logo-l" src="/assets/brand/milcity-stack-light.png" alt="MIL CITY Medical" width="200" height="124">
-      <img class="logo-d" src="/assets/brand/milcity-stack-dark.png" alt="MIL CITY Medical" width="200" height="124">
-    </a>
-    <div class="hub-name">Team Hub</div>
-    <nav class="nav" id="nav" aria-label="Main">
-      <a href="#home"><svg><use href="#i-home"/></svg>Home</a>
-      <a href="#tools"><svg><use href="#i-link"/></svg>Tools and links</a>
-      <a href="#training"><svg><use href="#i-play"/></svg>Training</a>
-      <a href="#org"><svg><use href="#i-org"/></svg>Org chart</a>
-      <a href="#rules"><svg><use href="#i-rules"/></svg>House rules</a>
-    </nav>
-    <div class="side-foot"><svg><use href="#i-lock"/></svg><span>For MIL CITY employees only. Don't share these links outside the company.</span></div>
-  </aside>
-
   <div class="main">
     <header class="topbar" id="topbar">
-      <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="side"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
       <a class="top-logo" href="#home" aria-label="MIL CITY Team Hub home">
         <img class="logo-l" src="/assets/brand/milcity-word-light.png" alt="" width="142" height="36">
         <img class="logo-d" src="/assets/brand/milcity-word-dark.png" alt="" width="142" height="36">
       </a>
-      <button class="find" id="findBtn" type="button"><svg><use href="#i-search"/></svg><span>Search tools, training and people</span><kbd id="kbd">Ctrl K</kbd></button>
-      <button class="icon-btn theme-btn" id="themeBtn" type="button" aria-label="Switch to dark mode" title="Switch to dark mode"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <nav class="nav" id="nav" popover aria-label="Main">
+        <a href="#home"><svg aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+        <a href="#tools"><svg aria-hidden="true"><use href="#i-link"/></svg>Tools and links</a>
+        <a href="#training"><svg aria-hidden="true"><use href="#i-play"/></svg>Training</a>
+        <a href="#org"><svg aria-hidden="true"><use href="#i-org"/></svg>Org chart</a>
+        <a href="#rules"><svg aria-hidden="true"><use href="#i-rules"/></svg>House rules</a>
+      </nav>
+      <div class="top-actions">
+        <button class="find" id="findBtn" type="button"><svg aria-hidden="true"><use href="#i-search"/></svg><span>Search</span><kbd id="kbd">Ctrl K</kbd></button>
+        <button class="icon-btn theme-btn" id="themeBtn" type="button" aria-label="Switch to dark mode" title="Switch to dark mode"><svg aria-hidden="true"><use href="#i-moon"/></svg></button>
+        <button class="icon-btn menu-btn" id="menuBtn" type="button" popovertarget="nav" aria-label="Open menu" aria-expanded="false" aria-controls="nav"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      </div>
     </header>
 
     <main class="content" id="content" tabindex="-1">
@@ -181,23 +174,19 @@
       </section>
 
     </main>
-    <footer class="foot"><span>© 2026 MIL CITY Medical</span><span>Team Hub · For employees only</span></footer>
+    <footer class="foot"><span>© 2026 MIL CITY Medical</span><span>For MIL CITY employees only. Don't share these links outside the company.</span></footer>
   </div>
 </div>
 
-<div class="scrim" id="scrim"></div>
-
-<aside class="drawer" id="person" aria-label="Person details" aria-hidden="true">
-  <div style="display:flex;justify-content:flex-end"><button class="icon-btn" id="closePerson" type="button" aria-label="Close details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+<dialog class="drawer" id="person" aria-label="Person details">
+  <div style="display:flex;justify-content:flex-end"><button class="icon-btn" type="button" data-action="close-person" aria-label="Close details"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
   <div id="personBody"></div>
-</aside>
+</dialog>
 
-<div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="Search">
-  <div class="pal-box">
-    <div class="pal-in"><svg><use href="#i-search"/></svg><input id="palQ" type="text" placeholder="Search tools, training and people" autocomplete="off" role="combobox" aria-expanded="true" aria-controls="palList" aria-activedescendant=""><kbd>Esc</kbd></div>
-    <ul class="pal-list" id="palList" role="listbox" aria-label="Results"></ul>
-  </div>
-</div>
+<dialog class="palette" id="palette" aria-label="Search">
+  <div class="pal-in"><svg aria-hidden="true"><use href="#i-search"/></svg><input id="palQ" type="text" placeholder="Search tools, training and people" aria-label="Search tools, training and people" autocomplete="off" autofocus role="combobox" aria-expanded="true" aria-controls="palList" aria-activedescendant=""><kbd>Esc</kbd></div>
+  <ul class="pal-list" id="palList" role="listbox" aria-label="Results"></ul>
+</dialog>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>

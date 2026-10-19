@@ -130,10 +130,10 @@ test.describe('keyboard', () => {
     await gotoRoute(page, 'home');
     await page.locator('#findBtn').focus();
     await page.keyboard.press('Control+k');
-    await expect(page.locator('#palette')).toHaveClass(/open/);
+    await expect(page.locator('#palette')).toHaveAttribute('open', '');
     await expect(page.locator('#palQ')).toBeFocused();
     await page.keyboard.press('Escape');
-    await expect(page.locator('#palette')).not.toHaveClass(/open/);
+    await expect(page.locator('#palette')).not.toHaveAttribute('open', '');
     await expect(page.locator('#findBtn')).toBeFocused();
   });
 
@@ -144,10 +144,10 @@ test.describe('keyboard', () => {
     await btn.focus();
     await page.keyboard.press('Enter');
     await expect(btn).toHaveAttribute('aria-expanded', 'true');
-    await expect(page.locator('#side')).toHaveClass(/open/);
+    await expect(page.locator('#nav')).toBeVisible();
     await page.keyboard.press('Escape');
     await expect(btn).toHaveAttribute('aria-expanded', 'false');
-    await expect(page.locator('#side')).not.toHaveClass(/open/);
+    await expect(page.locator('#nav')).toBeHidden();
     await expect(btn).toBeFocused();
   });
 });
