@@ -95,3 +95,4 @@ Starred tools now use a new saved key (`pins-v2`), so everyone starts with the f
 
 ### House rules
 - Replaced `public/assets/docs/house-rules.pdf` with the new MIL CITY VA House Rules & Standards of Conduct. Rewrote the "At a glance" summaries in `data.js` from it (the old ones were placeholders) and set the updated date to Oct 2026.
+- PDF links and the embedded viewer now add `?v=<updated>` so browsers load a replaced PDF; PDFs in `/assets/docs/` are revalidated on every load (`vercel.json`). Change `updated` in `data.js` when you replace the PDF.

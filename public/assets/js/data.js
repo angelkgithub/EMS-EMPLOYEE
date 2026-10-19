@@ -62,7 +62,7 @@ const ORG = P("Josh","Owner","Leadership","","","","",{
     ]})
   ]});
 
-const RULES_PDF = { url:"/assets/docs/house-rules.pdf", updated:"Oct 2026" };   // e.g. updated:"Oct 2026"
+const RULES_PDF = { url:"/assets/docs/house-rules.pdf", updated:"Oct 2026" };   // Change "updated" whenever you replace the PDF, e.g. "Oct 2026". It also makes browsers load the new file.
 const RULE_SECTIONS = [
   { title:"Professional conduct and respect", body:"Treat every teammate and every prospect with respect, even a hostile one. No shouting, mocking or talking over people. If someone says no, thank them and close the call. No harassment or discriminatory remarks: zero tolerance." },
   { title:"Transparency and honesty", body:"Never lie on the payment tracker or order log, and never fabricate call notes or lead status. Represent the company honestly: never claim an accreditation, price or stock level that isn't approved. Report mistakes and problems immediately." },

@@ -20,7 +20,13 @@
       ]
     },
     {
-      "source": "/assets/:folder(img|audio|team|docs)/:path*",
+      "source": "/assets/docs/:path*",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/assets/:folder(img|audio|team)/:path*",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }
       ]
