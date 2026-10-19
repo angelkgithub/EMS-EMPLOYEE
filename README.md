@@ -61,7 +61,7 @@ Open `public/assets/js/data.js`. Every list in it has comments explaining the fi
 | Sample call recordings | Save the MP3 into `public/assets/audio/`, then set `src:"/assets/audio/your-file.mp3"` |
 | Employee photos | Save into `public/assets/team/`, set `photo:"/assets/team/name.jpg"` (square, at least 200 px) |
 | House rules PDF | Save into `public/assets/docs/`, set `url:"/assets/docs/house-rules.pdf"` |
-| Org chart people | Edit `ORG`. Each person has `children:[ … ]` for who reports to them. Add `phone:` and `designation:` in the last `{ }` |
+| Org chart people | Edit `ORG`. Each person has `children:[ … ]` for who reports to them. Add `phone:` and `designation:` in the last `{ }`. The Org chart page groups cards by each person's `dept` |
 
 Anything you leave as `""` shows "Link not added yet" instead of a broken button, so you can publish before everything is ready.
 

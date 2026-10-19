@@ -39,11 +39,12 @@ test.describe('links', () => {
 });
 
 test.describe('org chart', () => {
-  test('7 people with correct roles', async ({ page }) => {
+  test('8 people with correct roles', async ({ page }) => {
     await gotoRoute(page, 'org');
-    await expect(page.locator('#tree .person')).toHaveCount(7);
+    await expect(page.locator('#tree .person')).toHaveCount(8);
     const roles = await page.locator('#tree .person .who > span:not(.tag-new)').allTextContents();
     expect(roles.filter(r => r === 'Owner' || r === 'Co-Owner')).toHaveLength(2);
+    expect(roles.filter(r => r === 'Director')).toHaveLength(1);
     expect(roles.filter(r => r === 'Operations Manager (OM)')).toHaveLength(1);
     expect(roles.filter(r => r === 'Sales Representative')).toHaveLength(4);
   });

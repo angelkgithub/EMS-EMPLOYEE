@@ -42,7 +42,7 @@ Phone numbers and dates use tabular figures (`.num`). No italics in headings, no
 - **Tool cards:** white surface on the ground, no outline. The Order Form card is filled navy (`primary:true` in data.js). Every external link opens in a new tab, says so to screen readers, and shows the external-link icon.
 - **Quick-access tiles:** tone step inside the panel, two columns. Real links, so middle-click and copy link work.
 - **Status labels:** a coloured dot plus text, never colour alone. "To be updated" (amber dot) and "New" (red, automatic for 30 days after a start date).
-- **Org chart cards:** initials on navy, or a photo when added. Owners and the OM have a red top edge. Cards open a drawer with email, phone, birthday (month and day) and start date, plus Email and Call buttons.
+- **Org chart cards:** a scrolling page of photo cards grouped by department (Leadership, Operations, Sales), four across on desktop and two on phones. No photo yet shows a neutral silhouette. Hover or keyboard focus shows a summary panel (email, phone, birthday, start date) over the picture; click or tap opens the drawer with Email and Call buttons.
 - **Inputs:** 1.5px outline, navy focus ring.
 - **Nav:** a top bar with the wordmark left, a rounded pill track in the middle (five links, the current page filled navy) and Search and theme buttons right. There is no sidebar. On phones the pill becomes a menu popover opened from the menu button.
 

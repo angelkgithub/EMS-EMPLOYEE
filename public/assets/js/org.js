@@ -30,14 +30,24 @@ const initials = p => {
   return words.map(w => w[0]).join("").slice(0, 2).toUpperCase();
 };
 const avatar = p => `<span class="avatar"><span aria-hidden="true">${initials(p)}</span>${p.photo ? `<img src="${esc(p.photo)}" alt="" loading="lazy" data-fallback>` : ""}</span>`;
-const card = (p, cls) => `<button class="person ${cls || ""}" type="button" data-action="open-person" data-pid="${p._id}">${avatar(p)}<span class="who"><strong>${esc(p.name)}</strong><span>${esc(p.role)}</span>${isNew(p) ? `<span class="tag-new">New</span>` : ""}</span></button>`;
-const orgNode = (p, depth) =>
-  `<li>${p.partner ? `<div class="pair">${card(p, "lead")}${card(p.partner, "lead")}</div>` : card(p, depth < 3 && p.children ? "lead" : "")}${p.children ? `<ul>${p.children.map(c => orgNode(c, depth + 1)).join("")}</ul>` : ""}</li>`;
+const photo = p => (p.photo ? `<img src="${esc(p.photo)}" alt="" loading="lazy" data-fallback>` : "");
+/* Hover and focus show a summary over the picture; the click opens the full drawer (touch and keyboard). */
+const peek = p => `<span class="peek" aria-hidden="true"><strong>${esc(p.name)}</strong><span class="peek-role">${esc(p.designation || p.role)}</span>
+    <span class="peek-row"><b>Email</b>${esc(p.email || "Not added")}</span><span class="peek-row"><b>Phone</b>${esc(p.phone || "Not added")}</span>
+    <span class="peek-row"><b>Birthday</b>${esc(monthDay(p.birthday))}</span><span class="peek-row"><b>Started</b>${esc(p.start || "Not added")}</span></span>`;
+const card = p => `<li><button class="person" type="button" data-action="open-person" data-pid="${p._id}">
+    <span class="pic"><svg class="ghost" aria-hidden="true"><use href="#i-user"/></svg>${photo(p)}${peek(p)}</span>
+    <span class="who"><strong>${esc(p.name)}</strong><span>${esc(p.role)}</span>${isNew(p) ? `<span class="tag-new">New</span>` : ""}</span></button></li>`;
 
+/* People are grouped by dept, in the order they appear in data.js. */
 function renderOrg() {
-  $("#tree").innerHTML = orgNode(D.ORG, 0);
+  const groups = new Map();
+  people.forEach(p => groups.set(p.dept || "Team", [...(groups.get(p.dept || "Team") || []), p]));
+  $("#tree").innerHTML = [...groups]
+    .map(([dept, list]) => `<section class="org-group" aria-labelledby="og-${esc(dept)}"><h2 id="og-${esc(dept)}">${esc(dept)}</h2><ul class="team-grid">${list.map(card).join("")}</ul></section>`)
+    .join("");
   const count = r => people.filter(p => p.role === r).length;
-  $("#orgCount").textContent = `${people.length} people: 2 owners, ${count("Operations Manager (OM)")} operations manager, ${count("Sales Representative")} sales representatives`;
+  $("#orgCount").textContent = `${people.length} people: 2 owners, ${count("Director")} director, ${count("Operations Manager (OM)")} operations manager, ${count("Sales Representative")} sales representatives`;
 }
 
 const drawer = $("#person");

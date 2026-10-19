@@ -40,7 +40,8 @@ const RECORDINGS = [
   { title:"Sample call 3", agent:"[Agent name]", src:"", notes:"[What makes this call a good example]" }
 ];
 
-/* Org chart. Owner and Co-Owner sit side by side at the top (partner), then the OM, then the sales reps.
+/* Org chart. Owner and Co-Owner sit at the top (partner), then the Director, then the OM, then the sales reps.
+   The Org chart page groups people by their dept (Leadership, Operations, Sales) in the order they appear here.
    P(name, role, dept, email, birthday, start, photo, extra)
    - birthday: the page shows month and day only. New entries store month and day only ("Apr 11").
    - start: "Oct 13, 2026". Anyone who started in the last 30 days gets a "New" label automatically.
@@ -52,11 +53,13 @@ const P=(name,role,dept,email,birthday,start,photo,extra)=>Object.assign({ name,
 const ORG = P("Robert James","Owner","Leadership","","Jan 23, 1986","","",{ origin:"Ohio",
   partner:P("Fredrick James","Co-Owner","Leadership","","Dec 28, 1990","","",{ origin:"Ohio" }),
   children:[
-    P("Arvin Jay Q. Romero","Operations Manager (OM)","Operations","arvin.helpingdiabetics@gmail.com","Apr 11","Aug 6, 2026","",{ phone:"+63 926 385 8341", designation:"Team Leader", children:[
-      P("Shermalyn Salih","Sales Representative","Sales","lyn.helpingdiabetics@gmail.com","Oct 24","Oct 13, 2026","",{ phone:"+63 976 364 2286" }),
-      P("John Saqlain Dela Cruz","Sales Representative","Sales","john.helpingdiabetics@gmail.com","Jan 2","Oct 13, 2026","",{ phone:"+63 945 708 9489" }),
-      P("Krystal Mae Cordovilla","Sales Representative","Sales","kylie.helpingdiabetics@gmail.com","May 5","Oct 13, 2026","",{ phone:"+63 905 608 9974" }),
-      P("Victor Faustin G. Munar","Sales Representative","Sales","tino.helpingdiabetics@gmail.com","Feb 15","Oct 13, 2026","",{ phone:"+63 917 128 5665" })
+    P("Roy Marc Caringal","Director","Leadership","roymarc.helpingdiabetics@gmail.com","May 31","","",{ phone:"+63 926 579 4877", children:[
+      P("Arvin Jay Q. Romero","Operations Manager (OM)","Operations","arvin.helpingdiabetics@gmail.com","Apr 11","Aug 6, 2026","",{ phone:"+63 926 385 8341", designation:"Team Leader", children:[
+        P("Shermalyn Salih","Sales Representative","Sales","lyn.helpingdiabetics@gmail.com","Oct 24","Oct 13, 2026","",{ phone:"+63 976 364 2286" }),
+        P("John Saqlain Dela Cruz","Sales Representative","Sales","john.helpingdiabetics@gmail.com","Jan 2","Oct 13, 2026","",{ phone:"+63 945 708 9489" }),
+        P("Krystal Mae Cordovilla","Sales Representative","Sales","kylie.helpingdiabetics@gmail.com","May 5","Oct 13, 2026","",{ phone:"+63 905 608 9974" }),
+        P("Victor Faustin G. Munar","Sales Representative","Sales","tino.helpingdiabetics@gmail.com","Feb 15","Oct 13, 2026","",{ phone:"+63 917 128 5665" })
+      ]})
     ]})
   ]});
 

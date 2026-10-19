@@ -78,3 +78,9 @@ Starred tools now use a new saved key (`pins-v2`), so everyone starts with the f
 - Page changes use `document.startViewTransition`, with an instant switch when it is unsupported or reduced motion is on.
 - Click wiring uses one delegated listener per section (`data-action`). `esc()` still wraps every value from `data.js`.
 - Tests updated for the new markup (dialog `open` attribute, popover menu). 16/16 pass, console clean.
+
+### Org chart redesign
+- Replaced the connector-line tree with a scrolling page of photo cards, grouped by `dept` (Leadership, Operations, Sales) in the order they appear in `data.js`. Hover or focus shows a summary over the picture; click or tap opens the drawer.
+- Cards without a photo show a silhouette. Add pictures in `/assets/team/` and set the `photo` field.
+- Added Roy Marc Caringal (Director) between the owners and the Operations Manager: email, phone and birthday (month and day only). His home address and birth year were left out on purpose (privacy rule); the address stays in the Contact Information sheet.
+- Now 8 people: 2 owners, 1 director, 1 operations manager, 4 sales representatives. Tests updated.
