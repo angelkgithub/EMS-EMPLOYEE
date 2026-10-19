@@ -34,12 +34,12 @@ def save(arr,name,width):
 sizes={}
 for k,w in (('stack',480),('word',640),('badge',480)):
     al=to_alpha(crop(k)); sizes[k]=save(al,f'milcity-{k}-light.png',w); save(dark(al),f'milcity-{k}-dark.png',w)
-# icons: cross mark on white rounded square
-cross=Image.fromarray(to_alpha(crop('cross')),'RGBA')
-def icon(size,pad=0.14,round_=True):
+# icons: round skyline badge on white rounded square
+cross=Image.fromarray(to_alpha(crop('badge')),'RGBA')
+def icon(size,pad=0.08,round_=True):
     bg=Image.new('RGBA',(size,size),(0,0,0,0)); d=ImageDraw.Draw(bg)
     d.rounded_rectangle((0,0,size-1,size-1),radius=int(size*.22) if round_ else 0,fill=(255,255,255,255))
-    s=int(size*(1-2*pad)); c=cross.resize((s,s),Image.LANCZOS); bg.alpha_composite(c,((size-s)//2,(size-s)//2)); return bg
+    s=int(size*(1-2*pad)); k=s/max(cross.size); c=cross.resize((round(cross.width*k),round(cross.height*k)),Image.LANCZOS); bg.alpha_composite(c,((size-c.width)//2,(size-c.height)//2)); return bg
 ROOT=OUT.rsplit('/assets',1)[0]
 icon(192).save(f'{ROOT}/icon-192.png',optimize=True)
 icon(512).save(f'{ROOT}/icon-512.png',optimize=True)
