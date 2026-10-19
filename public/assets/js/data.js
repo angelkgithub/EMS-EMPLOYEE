@@ -62,12 +62,12 @@ const ORG = P("Josh","Owner","Leadership","","","","",{
     ]})
   ]});
 
-const RULES_PDF = { url:"/assets/docs/house-rules.pdf", updated:"" };   // e.g. updated:"Oct 2026"
+const RULES_PDF = { url:"/assets/docs/house-rules.pdf", updated:"Oct 2026" };   // e.g. updated:"Oct 2026"
 const RULE_SECTIONS = [
-  { title:"Working hours and attendance", body:"[Copy this section from the house rules PDF.]" },
-  { title:"Communication with clients", body:"[Copy this section from the house rules PDF.]" },
-  { title:"Handling company and client data", body:"[Copy this section from the house rules PDF.]" },
-  { title:"Workplace conduct", body:"[Copy this section from the house rules PDF.]" }
+  { title:"Professional conduct and respect", body:"Treat every teammate and every prospect with respect, even a hostile one. No shouting, mocking or talking over people. If someone says no, thank them and close the call. No harassment or discriminatory remarks: zero tolerance." },
+  { title:"Transparency and honesty", body:"Never lie on the payment tracker or order log, and never fabricate call notes or lead status. Represent the company honestly: never claim an accreditation, price or stock level that isn't approved. Report mistakes and problems immediately." },
+  { title:"Call guide: openings, pitch and close", body:"Use the approved scripts and pricing anchors as written. Know the opening lines, the gatekeeper and decision maker flows, the approved objection responses, the follow-up cadence and the required order capture fields. Don't mark an order confirmed until the prospect confirms the read-back." },
+  { title:"What happens when rules are broken", body:"An honest mistake that you own quickly is handled with coaching. Falsified entries are a serious integrity issue, up to termination. Disrespect and misrepresenting accreditation, pricing or sourcing are handled with leadership and script review." }
 ];
 
 window.MILCITY_DATA = { TOOLS, GROUPS, DEFAULT_PINS, VIDEOS, RECORDINGS, ORG, RULES_PDF, RULE_SECTIONS };
