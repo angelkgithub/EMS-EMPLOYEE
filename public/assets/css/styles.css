@@ -343,3 +343,7 @@ kbd{font:inherit;font-size:.78rem;font-weight:650;padding:3px 8px;border-radius:
 .person:hover .peek,.person:focus-visible .peek{opacity:1;transform:none}
 @media (hover:none){.peek{display:none}}
 @media (max-width:560px){.team-grid{grid-template-columns:repeat(2,1fr);gap:12px}.who{padding:12px}.pic{aspect-ratio:1}}
+.page-head-center{text-align:center}
+.page-head-center p{margin-inline:auto}
+.page-head-center h1{font-size:clamp(2rem,4vw,2.8rem)}
+.eyebrow{margin:0 0 8px!important;font-size:.88rem!important;font-weight:600;color:var(--muted)!important}

@@ -42,13 +42,13 @@ Phone numbers and dates use tabular figures (`.num`). No italics in headings, no
 - **Tool cards:** white surface on the ground, no outline. The Order Form card is filled navy (`primary:true` in data.js). Every external link opens in a new tab, says so to screen readers, and shows the external-link icon.
 - **Quick-access tiles:** tone step inside the panel, two columns. Real links, so middle-click and copy link work.
 - **Status labels:** a coloured dot plus text, never colour alone. "To be updated" (amber dot) and "New" (red, automatic for 30 days after a start date).
-- **Org chart cards:** a scrolling page of photo cards grouped by department (Leadership, Operations, Sales), four across on desktop and two on phones. No photo yet shows a neutral silhouette. Hover or keyboard focus shows a summary panel (email, phone, birthday, start date) over the picture; click or tap opens the drawer with Email and Call buttons.
+- **Leadership team cards:** a scrolling page of photo cards grouped by department (Leadership, Operations, Sales), four across on desktop and two on phones. No photo yet shows a neutral silhouette. Hover or keyboard focus shows a summary panel (email, phone, birthday, start date) over the picture; click or tap opens the drawer with Email and Call buttons.
 - **Inputs:** 1.5px outline, navy focus ring.
 - **Nav:** a top bar with the wordmark left, a rounded pill track in the middle (five links, the current page filled navy) and Search and theme buttons right. There is no sidebar. On phones the pill becomes a menu popover opened from the menu button.
 
 ## 5. Layout and spacing
 
-Content max-width 1200px (the org chart page runs full width). Side padding 20–48px. Spacing steps 4 / 8 / 12 / 16 / 24 / 32 / 40px. Radii: 8px small, 14px cards, 22px panels.
+Content max-width 1200px . Side padding 20–48px. Spacing steps 4 / 8 / 12 / 16 / 24 / 32 / 40px. Radii: 8px small, 14px cards, 22px panels.
 
 ## 6. Depth
 
@@ -61,7 +61,7 @@ Don't: gradients, glass or blur, emoji, icon chips in tinted squares, 1px outlin
 
 ## 8. Responsive
 
-Breakpoints 1060 (home goes to one column), 900 (sidebar becomes a drawer), 760 (org chart becomes an indented list), 560 (tool cards go single column). Touch targets 44px minimum. Checked at 375, 390, 768, 1024 and 1440 with no sideways scrolling.
+Breakpoints 1060 (home goes to one column), 900 (sidebar becomes a drawer), 760 (leadership cards stay two across), 560 (tool cards go single column). Touch targets 44px minimum. Checked at 375, 390, 768, 1024 and 1440 with no sideways scrolling.
 
 ## 9. Logo usage
 

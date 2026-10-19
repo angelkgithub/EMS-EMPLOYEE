@@ -3,7 +3,7 @@ import { D } from "./store.js";
 import { go } from "./router.js";
 import { openPerson, people } from "./org.js";
 
-const PAGES = [["home", "Home", "i-home"], ["tools", "Tools and links", "i-link"], ["training", "Training", "i-play"], ["org", "Org chart", "i-org"], ["rules", "House rules", "i-rules"]];
+const PAGES = [["home", "Home", "i-home"], ["tools", "Tools and links", "i-link"], ["training", "Training", "i-play"], ["org", "Leadership team", "i-org"], ["rules", "House rules", "i-rules"]];
 
 function paletteItems() {
   const items = PAGES.map(([id, label, icon]) => ({ label, kind: "Page", icon, run: () => go(id) }));

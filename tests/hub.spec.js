@@ -39,11 +39,11 @@ test.describe('links', () => {
 });
 
 test.describe('org chart', () => {
-  test('8 people with correct roles', async ({ page }) => {
+  test('7 people with correct roles', async ({ page }) => {
     await gotoRoute(page, 'org');
-    await expect(page.locator('#tree .person')).toHaveCount(8);
+    await expect(page.locator('#tree .person')).toHaveCount(7);
     const roles = await page.locator('#tree .person .who > span:not(.tag-new)').allTextContents();
-    expect(roles.filter(r => r === 'Owner' || r === 'Co-Owner')).toHaveLength(2);
+    expect(roles.filter(r => r === 'Owner')).toHaveLength(1);
     expect(roles.filter(r => r === 'Director')).toHaveLength(1);
     expect(roles.filter(r => r === 'Operations Manager (OM)')).toHaveLength(1);
     expect(roles.filter(r => r === 'Sales Representative')).toHaveLength(4);
@@ -72,8 +72,8 @@ test.describe('privacy and brand', () => {
 
   test('no address words in data.js; new birthdays are month and day only', () => {
     expect(dataSrc).not.toMatch(banned);
-    // Anyone listed in the org chart other than the two owners stores month and day only.
-    for (const p of people.filter(x => x.role !== 'Owner' && x.role !== 'Co-Owner')) {
+    // Anyone listed in the org chart other than the owner stores month and day only.
+    for (const p of people.filter(x => x.role !== 'Owner')) {
       expect(p.birthday, p.name).not.toMatch(birthYear);
     }
   });

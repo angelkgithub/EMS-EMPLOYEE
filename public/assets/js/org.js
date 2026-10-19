@@ -2,7 +2,7 @@ import { $, delegate, esc } from "./util.js";
 import { D } from "./store.js";
 import { registerView } from "./router.js";
 
-/* Flat list of everyone in the org chart, with a stable id and a link to their manager. */
+/* Flat list of everyone on the leadership team page, with a stable id and a link to their manager. */
 export const people = [];
 (function walk(p, parent) {
   p._id = people.length;
@@ -47,7 +47,7 @@ function renderOrg() {
     .map(([dept, list]) => `<section class="org-group" aria-labelledby="og-${esc(dept)}"><h2 id="og-${esc(dept)}">${esc(dept)}</h2><ul class="team-grid">${list.map(card).join("")}</ul></section>`)
     .join("");
   const count = r => people.filter(p => p.role === r).length;
-  $("#orgCount").textContent = `${people.length} people: 2 owners, ${count("Director")} director, ${count("Operations Manager (OM)")} operations manager, ${count("Sales Representative")} sales representatives`;
+  $("#orgCount").textContent = `${people.length} people: ${count("Owner")} owner, ${count("Director")} director, ${count("Operations Manager (OM)")} operations manager, ${count("Sales Representative")} sales representatives`;
 }
 
 const drawer = $("#person");

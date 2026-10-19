@@ -28,7 +28,7 @@ for (const t of D.TOOLS) {
 for (const id of D.DEFAULT_PINS) if (!ids.has(id)) errors.push(`DEFAULT_PINS has unknown tool "${id}"`);
 D.VIDEOS.forEach(v => { if (!v.youtube) todo.push(`Video: ${v.title}`); else if (!/(youtu\.be\/|v=|embed\/|shorts\/|live\/)[\w-]{11}/.test(v.youtube)) errors.push(`Video "${v.title}": can't find a YouTube ID in the link`); });
 D.RECORDINGS.forEach(r => { if (!r.src) todo.push(`Recording: ${r.title}`); else if (!r.src.startsWith('/') || !/\.(mp3|m4a|wav|ogg)$/i.test(r.src)) errors.push(`${r.title}: use a file in /assets/audio/ ending in .mp3`); else local(r.title, r.src); });
-(function walk(p) { if (p.photo) local(`Photo for ${p.name}`, p.photo); if (/^\[/.test(p.name)) todo.push(`Org chart: ${p.role} still has a placeholder name`); if (p.partner) walk(p.partner); (p.children || []).forEach(walk); })(D.ORG);
+(function walk(p) { if (p.photo) local(`Photo for ${p.name}`, p.photo); if (/^\[/.test(p.name)) todo.push(`Leadership team: ${p.role} still has a placeholder name`); if (p.partner) walk(p.partner); (p.children || []).forEach(walk); })(D.ORG);
 (function walk2(p) { if (p.email && p.email !== p.email.toLowerCase()) errors.push(`${p.name}: write the email in lowercase`); if (p.start && isNaN(Date.parse(p.start))) errors.push(`${p.name}: start date "${p.start}" isn't a date like "Oct 13, 2026"`); (p.children || []).forEach(walk2); if (p.partner) walk2(p.partner); })(D.ORG);
 D.TOOLS.forEach(t => { if (t.status && t.status !== 'update') errors.push(`${t.name}: status must be "update" or left out`); });
 local('House rules PDF', D.RULES_PDF.url);

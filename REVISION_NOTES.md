@@ -84,3 +84,7 @@ Starred tools now use a new saved key (`pins-v2`), so everyone starts with the f
 - Cards without a photo show a silhouette. Add pictures in `/assets/team/` and set the `photo` field.
 - Added Roy Marc Caringal (Director) between the owners and the Operations Manager: email, phone and birthday (month and day only). His home address and birth year were left out on purpose (privacy rule); the address stays in the Contact Information sheet.
 - Now 8 people: 2 owners, 1 director, 1 operations manager, 4 sales representatives. Tests updated.
+
+### Leadership team page
+- Removed Fredrick James. Robert James is now "Josh", Owner (birthday and origin cleared; add his full name and details in `data.js`).
+- The Org chart page is now titled "Our Leadership Team" (centered heading with a small "The team" label). The nav link and search say "Leadership". Now 7 people; tests updated.
