@@ -8,3 +8,6 @@ node_modules
 .playwright-cli
 # Playwright CLI output (may contain credentials)
 .playwright-cli/
+
+test-results/
+playwright-report/

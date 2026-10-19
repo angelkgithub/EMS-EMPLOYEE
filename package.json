@@ -6,6 +6,11 @@
   "description": "Internal team hub for MIL CITY Medical: tools and links, training, org chart and house rules.",
   "scripts": {
     "dev": "npx serve public -l 3000",
-    "check": "node scripts/check.mjs"
+    "check": "node scripts/check.mjs",
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1"
   }
 }

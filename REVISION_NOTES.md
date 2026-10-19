@@ -59,3 +59,14 @@ Starred tools now use a new saved key (`pins-v2`), so everyone starts with the f
 1. What is the real name of the "Main Sheet"? Change `name:` for `id:"main"` in `data.js`.
 2. Should GoHighLevel or the Payment Tracker come back?
 3. Photos for the team: save them in `public/assets/team/` and set `photo:`.
+
+## Modernization
+
+### Phase 0: tools and CLAUDE.md
+- Installed the design-taste-frontend, image-to-code, web-design-guidelines and playwright-cli skills. Saved `docs/web-interface-guidelines.md` and `docs/MODERNIZE_PLAN.md`. Added `CLAUDE.md`.
+- `full-output-enforcement` did not install; nothing later depends on it.
+
+### Phase 1: automated tests
+- Added Playwright and axe (`npm test`, `tests/hub.spec.js`, `playwright.config.js`). 16 tests cover links, org chart, privacy, brand, layout, keyboard, dark mode and accessibility in both themes.
+- First run found one real accessibility issue: the search button's `aria-label` did not match its visible text. Removed the label so the visible text names the button.
+- First run of Chromium needs `npx playwright install chromium`.
