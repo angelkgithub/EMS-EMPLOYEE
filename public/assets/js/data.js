@@ -1,39 +1,35 @@
 (function(){
 "use strict";
 /* =====================================================================
-   EMS TEAM HUB: CONTENT
+   MIL CITY TEAM HUB: CONTENT
    This is the only file you need to edit to update the site.
 
    - Leave a url / src as "" until you have it. The page shows
      "Link not added yet" instead of a broken button.
+   - status:"update" marks a link as "To be updated". The link still opens.
+   - primary:true gives a tool the filled navy treatment (the main action).
    - Files you upload to this project use paths that start with "/":
        audio   /assets/audio/sample-call-1.mp3
-       photos  /assets/team/maria-santos.jpg
+       photos  /assets/team/arvin-romero.jpg
        PDFs    /assets/docs/house-rules.pdf
    - Run  npm run check  before deploying to catch typos in file paths.
    ===================================================================== */
 const TOOLS = [
-  { id:"leads",    name:"Agent Leads",                        group:"sales",     type:"sheet", desc:"Leads assigned to each sales agent.", url:"https://docs.google.com/spreadsheets/d/1RDiAvRJHhrueuwUzj555jq7Qrl3nhArjV-GH2JrrK2Q/edit?gid=1620293254#gid=1620293254" },
-  { id:"glp",      name:"GLP1 Lists",                         group:"sales",     type:"sheet", desc:"GLP1 product lists.", url:"https://docs.google.com/spreadsheets/d/1FAUICVoqF_h1BFgfxccn6Rxh7vu9W-Cu2QtYWffwjEk/edit?gid=0#gid=0" },
-  { id:"ghl",      name:"GoHighLevel",                        group:"sales",     type:"ghl",   desc:"East Med Distributors account. Opens the team inbox.", url:"https://app.gohighlevel.com/v2/location/20zxB8E6tTj5MFTSC4I0/conversations/conversations" },
-  { id:"orders",   name:"Order Submission Form",              group:"orders",    type:"form",  desc:"Form for submitting a new customer order.", url:"https://docs.google.com/forms/d/e/1FAIpQLScXsNpuDQNBVg_xwZ3L2_ICYrwokZta8jBNLnqOS3-opUGzMg/viewform?pli=1&pli=1" },
-  { id:"james",    name:"Order Form Responses: James",        group:"orders",    type:"sheet", desc:"Responses sheet for James's order forms.", url:"https://docs.google.com/spreadsheets/d/1eddxqD5EV_vG0Zj5ATiHuxBF-t_BPRBJj2IY_lvy6IQ/edit?pli=1&gid=1902546366#gid=1902546366" },
-  { id:"payment",  name:"Payment Tracker",                    group:"orders",    type:"sheet", desc:"Customer payments and balances.", url:"https://docs.google.com/spreadsheets/d/1W3fW7Mcpekrb-ybz0k77ilUqp9BZv8HWVrmcK1EFquI/edit?pli=1&gid=8354167#gid=8354167" },
-  { id:"otc",      name:"OTC Lists",                          group:"inventory", type:"sheet", desc:"Over-the-counter product lists and stock.", url:"https://docs.google.com/spreadsheets/d/1vG95EKfL8hSWTK4sNskaUvIMaqUTMcO-eYfPIEHV-Hw/edit?gid=0#gid=0" },
-  { id:"bible",    name:"EMS Bible",                          group:"reference", type:"multi", desc:"The company reference guide. Same content in three formats.",
-    formats:[
-      { label:"Sheet", type:"sheet", url:"https://docs.google.com/spreadsheets/d/1TV6lIaL82i5NdWVGbUvORwz0gzMgNPGrI2ukM0j-L5E/edit?gid=1648675415#gid=1648675415" },
-      { label:"Canva", type:"canva", url:"https://www.canva.com/design/DAHUKsE4iQ4/2g6uZ6ndDIhj5Qv_Qc3gTg/edit" },
-      { label:"PDF",   type:"pdf",   url:"https://drive.google.com/file/d/1xHJ25jtRk9pafLpFW7A_Se06DZXMApJk/view?usp=sharing" }
-    ] },
+  { id:"main",       name:"Main Sheet",          group:"daily",     type:"sheet", desc:"The team's main working sheet.", url:"https://docs.google.com/spreadsheets/d/1KuAKMAPSC2HKtVmTkRGNaApVZtuuDavI1xtddTs5H5U/edit?gid=0#gid=0" },
+  { id:"leads",      name:"Leads Sheet",         group:"daily",     type:"sheet", desc:"Leads assigned to each sales rep.", url:"https://docs.google.com/spreadsheets/d/1RDiAvRJHhrueuwUzj555jq7Qrl3nhArjV-GH2JrrK2Q/edit?pli=1&gid=162339084#gid=162339084" },
+  { id:"orders",     name:"Order Form",          group:"daily",     type:"form",  primary:true, desc:"Submit a new customer order.", url:"https://docs.google.com/forms/d/e/1FAIpQLSfFjt-080lKKjsXrrFJtkf83QBaSHJFRb2k2pdSc4fTmouYnA/viewform?usp=publish-editor" },
+  { id:"ordersheet", name:"Order Sheet",         group:"daily",     type:"sheet", desc:"Every order sent through the Order Form.", url:"https://docs.google.com/spreadsheets/d/1DAV79TT13feWgCHu61CEYF4jZ8mgcyiTFH576qV__9c/edit?resourcekey=&gid=216729633#gid=216729633" },
+  { id:"bible",      name:"Bible",               group:"reference", type:"sheet", desc:"The company reference guide.", url:"https://docs.google.com/spreadsheets/d/1TV6lIaL82i5NdWVGbUvORwz0gzMgNPGrI2ukM0j-L5E/edit?gid=0#gid=0" },
+  { id:"otc",        name:"OTC List",            group:"reference", type:"sheet", status:"update", desc:"Over-the-counter product list.", url:"https://docs.google.com/spreadsheets/d/1vG95EKfL8hSWTK4sNskaUvIMaqUTMcO-eYfPIEHV-Hw/edit?gid=0#gid=0" },
+  { id:"glp",        name:"GLP-1 List",          group:"reference", type:"sheet", status:"update", desc:"GLP-1 product list.", url:"https://docs.google.com/spreadsheets/d/1sgxvHHwXUTvatQL_d8g0iCCWUA8UjX48k1vbS3MngZQ/edit?gid=0#gid=0" },
+  { id:"contacts",   name:"Contact Information", group:"team",      type:"sheet", desc:"Contact details for everyone on the team.", url:"https://docs.google.com/spreadsheets/d/1BL-ij9-TW7IOF1LcN1w5MHB9XnC4TZRHIqWRRL3HSWQ/edit?gid=0#gid=0" }
 ];
 const GROUPS = [
-  { id:"sales", name:"Sales and leads" },
-  { id:"orders", name:"Orders and payments" },
-  { id:"inventory", name:"Inventory" },
-  { id:"reference", name:"Reference" }
+  { id:"daily",     name:"Daily work" },
+  { id:"reference", name:"Reference" },
+  { id:"team",      name:"Team" }
 ];
-const DEFAULT_PINS = ["leads","orders","payment","bible"];
+const DEFAULT_PINS = ["main","leads","orders","ordersheet"];
 
 const VIDEOS = [
   { title:"Cold calling for B2B sales", youtube:"https://youtu.be/17SF_CBE2Pg?si=BNmSeSNTMbZbVn84",  notes:"Watch this before your first day on the phones." }
@@ -44,39 +40,27 @@ const RECORDINGS = [
   { title:"Sample call 3", agent:"[Agent name]", src:"", notes:"[What makes this call a good example]" }
 ];
 
-/* Org chart. Owner and Co-Owner sit side by side at the top (partner), then OM, then TM.
-   photo: put each picture in /assets/team/ and set e.g. "/assets/team/roy-caringal.jpg". Leave "" until you have it.
-   Addresses are intentionally not stored. */
+/* Org chart. Owner and Co-Owner sit side by side at the top (partner), then the OM, then the sales reps.
+   P(name, role, dept, email, birthday, start, photo, extra)
+   - birthday: the page shows month and day only. New entries store month and day only ("Apr 11").
+   - start: "Oct 13, 2026". Anyone who started in the last 30 days gets a "New" label automatically.
+   - extra: { phone:"+63 9xx xxx xxxx", designation:"..." }
+   - photo: put each picture in /assets/team/ and set e.g. "/assets/team/arvin-romero.jpg". Leave "" until you have it.
+   Home addresses are intentionally not stored. They stay in the Contact Information sheet. */
 const P=(name,role,dept,email,birthday,start,photo,extra)=>Object.assign({ name, role, dept, email, birthday, start, photo:photo||"" },extra);
 
 const ORG = P("Robert James","Owner","Leadership","","Jan 23, 1986","","",{ origin:"Ohio",
   partner:P("Fredrick James","Co-Owner","Leadership","","Dec 28, 1990","","",{ origin:"Ohio" }),
   children:[
-  P("Roy Marc Caringal","Operations Manager (OM)","Operations","roy.helpingdiabetics@gmail.com","May 31, 1989","Aug 3, 2026","",{ children:[
-    P("Kareen Myles C. Barrera","Team Manager (TM)","Sales","myles.eastmedsupplies@gmail.com","Jun 26, 1988","","",{ children:[
-      P("Angelus Clemeth Ablaza","Team Leader / Supervisor","Sales","angelusclemeth.helpingdiabetics@gmail.com","Nov 5, 1990","Aug 14, 2026"),
-      P("Arvin Jay Romero","Team Leader","Sales","arvin.helpingdiabetics@gmail.com","Apr 11, 1998",""),
-      P("Rowiel Alday","Team Leader","Sales","rex.helpingdiabetics@gmail.com","Sep 11, 1999","Aug 18, 2026")
-    ]}),
-    P("Jonil Abenir (Juju)","Trainer","Training","jon.helpingdiabetics@gmail.com","Nov 16, 1989","Aug 4, 2026"),
-    P("Jayvee Panganiban","Secretary / QA","Admin","jayvee.helpingdiabetics@gmail.com","","Aug 5, 2026"),
-    P("Lord Marco P. Ilustrisimo","FB Ads Manager","Marketing","maykotrisimo6@gmail.com","Mar 21, 1996","Aug 15, 2026")
-  ]})
-]});
+    P("Arvin Jay Q. Romero","Operations Manager (OM)","Operations","arvin.helpingdiabetics@gmail.com","Apr 11","Aug 6, 2026","",{ phone:"+63 926 385 8341", designation:"Team Leader", children:[
+      P("Shermalyn Salih","Sales Representative","Sales","lyn.helpingdiabetics@gmail.com","Oct 24","Oct 13, 2026","",{ phone:"+63 976 364 2286" }),
+      P("John Saqlain Dela Cruz","Sales Representative","Sales","john.helpingdiabetics@gmail.com","Jan 2","Oct 13, 2026","",{ phone:"+63 945 708 9489" }),
+      P("Krystal Mae Cordovilla","Sales Representative","Sales","kylie.helpingdiabetics@gmail.com","May 5","Oct 13, 2026","",{ phone:"+63 905 608 9974" }),
+      P("Victor Faustin G. Munar","Sales Representative","Sales","tino.helpingdiabetics@gmail.com","Feb 15","Oct 13, 2026","",{ phone:"+63 917 128 5665" })
+    ]})
+  ]});
 
-/* Sales team. Team Leader assignments aren't set yet, so they are shown together under the Team Leaders. */
-const SALES_TEAM = [
-  P("Jeniel Andrew Sarmiento","Agent","Sales","andygarcia.helpingdiabetics@gmail.com","Mar 23, 1990","Sep 14, 2026"),
-  P("Klydine Claire Z. Morales","Sales Agent","Sales","klydhelpingdiabetics@gmail.com","Mar 3, 1990","Aug 14, 2026"),
-  P("Maria Fatima Vengco (Patch)","Sales Representative","Sales","patch.helpingdiabetics@gmail.com","Oct 12, 1991","Sep 14, 2026"),
-  P("Joselito Jr Bercasio","Sales Representative","Sales","jbercasio.helpingdiabetics@gmail.com","Aug 26, 1988","Aug 6, 2026"),
-  P("Edward Alexes Engbino","Sales Representative","Sales","Edward.helpingdiabetics@gmail.com","Sep 13, 1987","Aug 20, 2026"),
-  P("Albert Paubsanon","Sales Representative","Sales","albert.helpingdiabetics@gmail.com","Jul 18, 1987",""),
-  P("Francis Meldrin Daya","Sales Representative","Sales","francis.helpingdiabetics@gmail.com","Apr 13, 1993","Sep 14, 2026"),
-  P("Angel Jan Katigbak","Sales Rep / Software Dev","Sales","angelhelpingdiabetics@gmail.com","Sep 5, 2005","Aug 17, 2026")
-];
-
-const RULES_PDF = { url:"/assets/docs/house-rules.pdf", updated:"" };   // e.g. url:"/assets/docs/house-rules.pdf", updated:"Sep 2026"
+const RULES_PDF = { url:"/assets/docs/house-rules.pdf", updated:"" };   // e.g. updated:"Oct 2026"
 const RULE_SECTIONS = [
   { title:"Working hours and attendance", body:"[Copy this section from the house rules PDF.]" },
   { title:"Communication with clients", body:"[Copy this section from the house rules PDF.]" },
@@ -84,5 +68,5 @@ const RULE_SECTIONS = [
   { title:"Workplace conduct", body:"[Copy this section from the house rules PDF.]" }
 ];
 
-window.EMS_DATA = { TOOLS, GROUPS, DEFAULT_PINS, VIDEOS, RECORDINGS, ORG, SALES_TEAM, RULES_PDF, RULE_SECTIONS };
+window.MILCITY_DATA = { TOOLS, GROUPS, DEFAULT_PINS, VIDEOS, RECORDINGS, ORG, RULES_PDF, RULE_SECTIONS };
 })();

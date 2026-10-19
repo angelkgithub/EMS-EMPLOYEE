@@ -1,6 +1,7 @@
 "use strict";
-/* EMS Team Hub. Content lives in assets/js/data.js; this file is the behavior. */
-const { TOOLS, GROUPS, DEFAULT_PINS, VIDEOS, RECORDINGS, ORG, SALES_TEAM, RULES_PDF, RULE_SECTIONS } = window.EMS_DATA;
+/* MIL CITY Team Hub. Content lives in assets/js/data.js; this file is the behavior.
+   localStorage keys keep the old "ems-hub:" prefix on purpose so people keep their saved progress. */
+const { TOOLS, GROUPS, DEFAULT_PINS, VIDEOS, RECORDINGS, ORG, RULES_PDF, RULE_SECTIONS } = window.MILCITY_DATA;
 
 /* Images can't use inline onerror under our Content-Security-Policy, so failed images are removed here. */
 document.addEventListener("error", e => { const t=e.target; if(t && t.tagName==="IMG" && t.hasAttribute("data-fallback")) t.remove(); }, true);
@@ -11,28 +12,33 @@ document.addEventListener("error", e => { const t=e.target; if(t && t.tagName===
   const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const store={ get(k,d){ try{ const v=localStorage.getItem("ems-hub:"+k); return v?JSON.parse(v):d; }catch(e){ return d; } },
                 set(k,v){ try{ localStorage.setItem("ems-hub:"+k,JSON.stringify(v)); }catch(e){} } };
-  const TYPE = { sheet:{label:"Google Sheets",icon:"i-sheet"},form:{label:"Google Forms",icon:"i-rules"}, canva:{label:"Canva",icon:"i-canva"}, pdf:{label:"PDF",icon:"i-pdf"}, ghl:{label:"GoHighLevel",icon:"i-rocket"}, multi:{label:"Sheet, Canva and PDF",icon:"i-book"} };
-  const toolIcon=t=> t.group==="inventory" ? "i-box" : TYPE[t.type].icon;
+  const TYPE = { sheet:{label:"Google Sheet",icon:"i-sheet"},form:{label:"Google Form",icon:"i-form"}, canva:{label:"Canva",icon:"i-canva"}, pdf:{label:"PDF",icon:"i-pdf"}, ghl:{label:"GoHighLevel",icon:"i-rocket"}, multi:{label:"Sheet, Canva and PDF",icon:"i-book"} };
+  const toolIcon=t=> t.group==="team" ? "i-user" : TYPE[t.type].icon;
+  const NEWTAB=`<span class="sr"> (opens in a new tab)</span>`;
+  const statusTag=t=> t.status==="update" ? `<span class="tag-update">To be updated</span>` : "";
   const hasLink=t=> t.formats ? t.formats.some(f=>f.url) : !!t.url;
   const firstUrl=t=> t.formats ? (t.formats.find(f=>f.url)||{}).url : t.url;
 
   let tt; function toast(m){ const t=$("#toast"); t.textContent=m; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),2400); }
-  function openUrl(u){ window.open(u,"_blank","noopener"); }
+  function openUrl(u){ window.open(u,"_blank","noopener,noreferrer"); }
   async function copy(u,name){ try{ await navigator.clipboard.writeText(u); toast(`Copied link to ${name}`); }catch(e){ toast("Couldn't copy. Open the link and copy it from the address bar."); } }
 
   /* ---------- Home ---------- */
   const h=new Date().getHours();
   $("#greet").textContent = h<12 ? "Good morning, team" : h<18 ? "Good afternoon, team" : "Good evening, team";
-  let pins=store.get("pins",DEFAULT_PINS);
+  let pins=store.get("pins-v2",DEFAULT_PINS);
   function renderQuick(){
     const list=pins.map(id=>TOOLS.find(t=>t.id===id)).filter(Boolean);
     if(!list.length){ $("#quick").innerHTML=`<div class="empty" style="grid-column:1/-1">Star a tool on <a href="#tools">Tools and links</a> to keep it here.</div>`; return; }
-    $("#quick").innerHTML=list.map(t=>`<button class="qtile" type="button" data-id="${t.id}"><span class="mark"><svg><use href="#${toolIcon(t)}"/></svg></span><strong>${esc(t.name)}</strong><small>${hasLink(t)?TYPE[t.type].label:"Link not added yet"}</small></button>`).join("");
-    $$("#quick .qtile").forEach(b=>b.onclick=()=>{ const t=TOOLS.find(x=>x.id===b.dataset.id); if(t.formats){ go("tools",t.id); } else if(t.url){ openUrl(t.url); } else toast(`The link for ${t.name} hasn't been added yet.`); });
+    const inner=t=>`<span class="mark"><svg><use href="#${toolIcon(t)}"/></svg></span><strong>${esc(t.name)}</strong><small>${hasLink(t)?TYPE[t.type].label:"Link not added yet"}${statusTag(t)}</small>`;
+    $("#quick").innerHTML=list.map(t=> (t.url && !t.formats)
+      ? `<a class="qtile${t.primary?" qtile-primary":""}" href="${esc(t.url)}" target="_blank" rel="noopener noreferrer">${inner(t)}<svg class="qext" aria-hidden="true"><use href="#i-ext"/></svg>${NEWTAB}</a>`
+      : `<button class="qtile" type="button" data-id="${t.id}">${inner(t)}</button>`).join("");
+    $$("#quick button.qtile").forEach(b=>b.onclick=()=>{ const t=TOOLS.find(x=>x.id===b.dataset.id); if(t.formats){ go("tools",t.id); } else toast(`The link for ${t.name} hasn't been added yet.`); });
   }
   const STEPS=[
     {label:"Read the house rules", href:"#rules"},
-    {label:"Read the EMS Bible", href:"#tools", focus:"bible"},
+    {label:"Read the Bible", href:"#tools", focus:"bible"},
     {label:"Watch the cold calling lesson", href:"#training"},
     {label:"Listen to the sample calls", href:"#training"},
     {label:"Get to know the team", href:"#org"}
@@ -56,15 +62,15 @@ document.addEventListener("error", e => { const t=e.target; if(t && t.tagName===
     const pinned=pins.includes(t.id);
     let actions;
     if(t.formats){
-      actions=t.formats.map(f=> f.url ? `<a class="btn ${f===t.formats[0]?"btn-primary":"btn-ghost"}" href="${esc(f.url)}" target="_blank" rel="noopener"><svg><use href="#${TYPE[f.type].icon}"/></svg>${f.label}</a>` : `<button class="btn btn-ghost" type="button" disabled title="Link not added yet"><svg><use href="#${TYPE[f.type].icon}"/></svg>${f.label}</button>`).join("");
+      actions=t.formats.map(f=> f.url ? `<a class="btn ${f===t.formats[0]?"btn-primary":"btn-ghost"}" href="${esc(f.url)}" target="_blank" rel="noopener noreferrer"><svg><use href="#${TYPE[f.type].icon}"/></svg>${f.label}${NEWTAB}</a>` : `<button class="btn btn-ghost" type="button" disabled title="Link not added yet"><svg><use href="#${TYPE[f.type].icon}"/></svg>${f.label}</button>`).join("");
       if(!hasLink(t)) actions+=`<span class="pending">Links not added yet</span>`;
     } else if(t.url){
-      actions=`<a class="btn btn-primary" href="${esc(t.url)}" target="_blank" rel="noopener">Open<svg><use href="#i-ext"/></svg></a><button class="icon-btn" type="button" data-copy="${t.id}" aria-label="Copy link to ${esc(t.name)}"><svg><use href="#i-copy"/></svg></button>`;
+      actions=`<a class="btn ${t.primary?"btn-light":"btn-primary"}" href="${esc(t.url)}" target="_blank" rel="noopener noreferrer">Open<span class="sr"> ${esc(t.name)}</span>${NEWTAB}<svg aria-hidden="true"><use href="#i-ext"/></svg></a><button class="icon-btn" type="button" data-copy="${t.id}" aria-label="Copy link to ${esc(t.name)}"><svg><use href="#i-copy"/></svg></button>`;
     } else {
       actions=`<span class="pending">Link not added yet</span>`;
     }
-    return `<article class="tool" id="tool-${t.id}" style="animation-delay:${Math.min(i,10)*40}ms">
-      <div class="tool-top"><span class="mark"><svg><use href="#${toolIcon(t)}"/></svg></span><div><h3>${esc(t.name)}</h3><span class="tool-type">${TYPE[t.type].label}</span></div>
+    return `<article class="tool${t.primary?" tool-primary":""}" id="tool-${t.id}" style="animation-delay:${Math.min(i,10)*40}ms">
+      <div class="tool-top"><span class="mark"><svg><use href="#${toolIcon(t)}"/></svg></span><div><h3>${esc(t.name)}</h3><span class="tool-type">${TYPE[t.type].label}${statusTag(t)}</span></div>
       <button class="icon-btn" type="button" data-pin="${t.id}" aria-pressed="${pinned}" aria-label="${pinned?"Remove":"Add"} ${esc(t.name)} ${pinned?"from":"to"} quick access"><svg><use href="#i-star"/></svg></button></div>
       <p>${esc(t.desc)}</p>
       <div class="tool-actions">${actions}</div></article>`;
@@ -81,7 +87,7 @@ document.addEventListener("error", e => { const t=e.target; if(t && t.tagName===
     $$("[data-pin]").forEach(b=>b.onclick=()=>{
       const id=b.dataset.pin, t=TOOLS.find(x=>x.id===id);
       if(pins.includes(id)){ pins=pins.filter(x=>x!==id); toast(`Removed ${t.name} from quick access`); } else { pins=[...pins,id]; toast(`Added ${t.name} to quick access`); }
-      store.set("pins",pins); b.setAttribute("aria-pressed",pins.includes(id)); b.setAttribute("aria-label",`${pins.includes(id)?"Remove":"Add"} ${t.name} ${pins.includes(id)?"from":"to"} quick access`); renderQuick();
+      store.set("pins-v2",pins); b.setAttribute("aria-pressed",pins.includes(id)); b.setAttribute("aria-label",`${pins.includes(id)?"Remove":"Add"} ${t.name} ${pins.includes(id)?"from":"to"} quick access`); renderQuick();
     });
     $$("[data-copy]").forEach(b=>b.onclick=()=>{ const t=TOOLS.find(x=>x.id===b.dataset.copy); copy(t.url,t.name); });
   }
@@ -97,7 +103,7 @@ document.addEventListener("error", e => { const t=e.target; if(t && t.tagName===
         ? `<button class="facade" type="button" data-v="${i}" aria-label="Play video: ${esc(v.title)}"><img src="https://i.ytimg.com/vi/${id}/hqdefault.jpg" alt="" data-fallback><span class="playbig"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><span class="vt">${esc(v.title)}</span></button>`
         : `<div class="video-empty"><div><svg width="44" height="44" style="color:#fff;opacity:.8"><use href="#i-play"/></svg><p style="margin-top:8px;font-weight:650">${esc(v.title)}</p><p style="opacity:.8">Video link not added yet</p></div></div>`;
       return `<div style="${i?"margin-top:28px":""}"><div class="video" id="video-${i}">${inner}</div>
-        <div class="video-meta"><p class="muted">${esc(v.notes)}</p>${id?`<a class="btn btn-ghost" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener">Watch on YouTube<svg><use href="#i-ext"/></svg></a>`:""}</div></div>`;
+        <div class="video-meta"><p class="muted">${esc(v.notes)}</p>${id?`<a class="btn btn-ghost" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener noreferrer">Watch on YouTube${NEWTAB}<svg aria-hidden="true"><use href="#i-ext"/></svg></a>`:""}</div></div>`;
     }).join("");
     $$("[data-v]").forEach(b=>b.onclick=()=>{
       const v=VIDEOS[+b.dataset.v], id=ytId(v.youtube), box=$("#video-"+b.dataset.v);
@@ -134,19 +140,28 @@ document.addEventListener("error", e => { const t=e.target; if(t && t.tagName===
 
   /* ---------- Org chart ---------- */
   const people=[]; (function walk(p,parent){ p._id=people.length; p._parent=parent; people.push(p); if(p.partner) walk(p.partner,null); (p.children||[]).forEach(c=>walk(c,p)); })(ORG,null);
-  SALES_TEAM.forEach(a=>{ a._reports="Team Leaders"; people.push(a); a._id=people.length-1; });
+  const DAY=864e5, today=new Date();
+  const isNew=p=>{ const d=Date.parse(p.start||""); return !isNaN(d) && today-d>=0 && today-d<30*DAY; };
+  const monthDay=s=>{ if(!s) return "Not added"; const m=String(s).match(/^([A-Za-z]{3,})\.?\s+(\d{1,2})/); return m?`${m[1].slice(0,3)} ${+m[2]}`:s; };
+  const telHref=n=>"tel:"+String(n).replace(/[^\d+]/g,"");
   const initials=p=>{ const n=p.name.replace(/\(.*?\)/g,"").replace(/[\[\]]/g,"").trim(); if(!n||n==="Name") return p.role.split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase(); return n.split(/\s+/).map(w=>w[0]).join("").slice(0,2).toUpperCase(); };
   const avatar=p=>`<span class="avatar"><span aria-hidden="true">${initials(p)}</span>${p.photo?`<img src="${esc(p.photo)}" alt="" loading="lazy" data-fallback>`:""}</span>`;
-  const card=(p,cls)=>`<button class="person ${cls||""}" type="button" data-pid="${p._id}">${avatar(p)}<span class="who"><strong>${esc(p.name)}</strong><span>${esc(p.role)}</span></span></button>`;
+  const card=(p,cls)=>`<button class="person ${cls||""}" type="button" data-pid="${p._id}">${avatar(p)}<span class="who"><strong>${esc(p.name)}</strong><span>${esc(p.role)}</span>${isNew(p)?`<span class="tag-new">New</span>`:""}</span></button>`;
   function orgNode(p,depth){ return `<li>${p.partner?`<div class="pair">${card(p,"lead")}${card(p.partner,"lead")}</div>`:card(p,depth<3&&p.children?"lead":"")}${p.children?`<ul>${p.children.map(c=>orgNode(c,depth+1)).join("")}</ul>`:""}</li>`; }
-  function renderOrg(){ $("#tree").innerHTML=orgNode(ORG,0); $("#agents").innerHTML=SALES_TEAM.map(a=>card(a)).join(""); $$("[data-pid]").forEach(b=>b.onclick=()=>openPerson(+b.dataset.pid,b)); }
+  function renderOrg(){
+    $("#tree").innerHTML=orgNode(ORG,0);
+    const count=(r)=>people.filter(p=>p.role===r).length, om=count("Operations Manager (OM)"), reps=count("Sales Representative");
+    $("#orgCount").textContent=`${people.length} people: 2 owners, ${om} operations manager, ${reps} sales representatives`;
+    $$("[data-pid]").forEach(b=>b.onclick=()=>openPerson(+b.dataset.pid,b));
+  }
   const drawer=$("#person"), scrim=$("#scrim"), appRoot=$(".app"); let returnFocus=null;
   const lock=on=>{ appRoot.inert=on; };
   function openPerson(id,from){
     const p=people[id]; returnFocus=from||document.activeElement;
     const row=(k,v)=>`<div><dt>${k}</dt><dd>${v}</dd></div>`;
     $("#personBody").innerHTML=`${avatar(p)}<h2 style="font-size:1.6rem">${esc(p.name)}</h2><p class="muted" style="margin-top:4px">${esc(p.role)}</p>
-      <dl class="facts">${row("Department",esc(p.dept||"—"))}${row("Reports to",p._parent?`${esc(p._parent.name)}, ${esc(p._parent.role)}`:esc(p._reports||"—"))}${row("Work email",p.email?`<a href="mailto:${esc(p.email)}">${esc(p.email)}</a>`:`<span class="placeholder">[Email]</span>`)}${row("Birthday",p.birthday?esc(p.birthday):"—")}${row("Start date",p.start?esc(p.start):"—")}${p.origin?row("From",esc(p.origin)):""}</dl>`;
+      <dl class="facts">${p.designation?row("Designation",esc(p.designation)):""}${row("Department",esc(p.dept||"Not added"))}${row("Reports to",p._parent?`${esc(p._parent.name)}, ${esc(p._parent.role)}`:"Not added")}${row("Work email",p.email?`<a href="mailto:${esc(p.email)}">${esc(p.email)}</a>`:"Not added")}${row("Phone",p.phone?`<a class="num" href="${telHref(p.phone)}">${esc(p.phone)}</a>`:"Not added")}${row("Birthday",esc(monthDay(p.birthday)))}${row("Start date",p.start?`<span class="num">${esc(p.start)}</span>${isNew(p)?` <span class="tag-new">New</span>`:""}`:"Not added")}${p.origin?row("From",esc(p.origin)):""}</dl>
+      ${p.email||p.phone?`<div class="drawer-actions">${p.email?`<a class="btn btn-primary" href="mailto:${esc(p.email)}">Email<span class="sr"> ${esc(p.name)}</span></a>`:""}${p.phone?`<a class="btn btn-ghost" href="${telHref(p.phone)}">Call<span class="sr"> ${esc(p.name)}</span></a>`:""}</div>`:""}`;
     lock(true); drawer.classList.add("open"); drawer.setAttribute("aria-hidden","false"); scrim.classList.add("show"); $("#closePerson").focus();
   }
   function closePerson(){ lock(false); drawer.classList.remove("open"); drawer.setAttribute("aria-hidden","true"); if(!side.classList.contains("open")) scrim.classList.remove("show"); if(returnFocus) returnFocus.focus(); }
@@ -157,10 +172,10 @@ document.addEventListener("error", e => { const t=e.target; if(t && t.tagName===
   function renderRules(){
     $("#docMeta").textContent = RULES_PDF.updated ? `PDF document, last updated ${RULES_PDF.updated}` : "PDF document";
     $("#docActions").innerHTML = RULES_PDF.url
-      ? `<a class="btn btn-primary" href="${esc(RULES_PDF.url)}" target="_blank" rel="noopener">Open PDF<svg><use href="#i-ext"/></svg></a><a class="btn btn-ghost" href="${esc(RULES_PDF.url)}" download>Download<svg><use href="#i-dl"/></svg></a>`
+      ? `<a class="btn btn-primary" href="${esc(RULES_PDF.url)}" target="_blank" rel="noopener noreferrer">Open PDF${NEWTAB}<svg aria-hidden="true"><use href="#i-ext"/></svg></a><a class="btn btn-ghost" href="${esc(RULES_PDF.url)}" download>Download<svg><use href="#i-dl"/></svg></a>`
       : `<span class="pending">PDF not added yet</span>`;
     $("#acc").innerHTML=RULE_SECTIONS.map((s,i)=>`<div class="acc-item"><button type="button" aria-expanded="false" aria-controls="accp-${i}" id="acch-${i}">${esc(s.title)}<svg><use href="#i-chev"/></svg></button><div class="acc-panel" id="accp-${i}" role="region" aria-labelledby="acch-${i}"><div><p>${esc(s.body)}</p></div></div></div>`).join("");
-    $("#pdfView").innerHTML = RULES_PDF.url ? `<iframe src="${esc(RULES_PDF.url)}#view=FitH" title="EMS House Rules PDF"></iframe>` : "";
+    $("#pdfView").innerHTML = RULES_PDF.url ? `<iframe src="${esc(RULES_PDF.url)}#view=FitH" title="MIL CITY House Rules PDF"></iframe>` : "";
     $$("#acc button").forEach(b=>b.onclick=()=>{ const open=b.getAttribute("aria-expanded")==="true"; b.setAttribute("aria-expanded",!open); b.parentElement.classList.toggle("open",!open); });
     const ack=store.get("ack",null); $("#ackBox").checked=!!ack; $("#ackNote").textContent=ack?`Confirmed on ${ack}. Saved on this device only.`:"Saved on this device only";
   }

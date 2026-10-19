@@ -1,10 +1,10 @@
-/* EMS Team Hub: light / dark theme.
+/* MIL CITY Team Hub: light / dark theme.
    Loaded in <head> WITHOUT "defer" so a saved choice is applied before the
    first paint (no flash of the wrong theme). Until someone taps the button,
    the site follows the device setting. */
 (function () {
   "use strict";
-  var KEY = "ems-hub:theme";
+  var KEY = "ems-hub:theme";                      // old prefix kept so saved choices survive the rebrand
   var root = document.documentElement;
   var mq = window.matchMedia("(prefers-color-scheme: dark)");
 
@@ -23,7 +23,7 @@
     var use = btn.querySelector("use");
     var metas = [].slice.call(document.querySelectorAll('meta[name="theme-color"]'));
     var originals = metas.map(function (m) { return m.getAttribute("content"); });
-    var BAR = { light: "#F3F5F9", dark: "#0A1124" };
+    var BAR = { light: "#F4F6FA", dark: "#08101F" };
 
     function sync() {
       var dark = effective() === "dark";

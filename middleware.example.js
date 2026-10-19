@@ -4,7 +4,7 @@
   To turn it on:
     1. Rename this file to  middleware.js  (same folder as vercel.json).
     2. In Vercel: Project > Settings > Environment Variables, add
-         HUB_USER      a shared username, for example  ems
+         HUB_USER      a shared username, for example  milcity
          HUB_PASSWORD  a long shared password (16+ characters)
     3. Redeploy.
 
@@ -56,10 +56,10 @@ export default function middleware(request) {
     }
   }
 
-  return new Response('Sign in to view the EMS Team Hub.', {
+  return new Response('Sign in to view the MIL CITY Team Hub.', {
     status: 401,
     headers: {
-      'WWW-Authenticate': 'Basic realm="EMS Team Hub", charset="UTF-8"',
+      'WWW-Authenticate': 'Basic realm="MIL CITY Team Hub", charset="UTF-8"',
       'Cache-Control': 'no-store',
     },
   });
