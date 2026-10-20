@@ -47,7 +47,7 @@ function renderOrg() {
     .map(([dept, list]) => `<section class="org-group" aria-labelledby="og-${esc(dept)}"><h2 id="og-${esc(dept)}">${esc(dept)}</h2><ul class="team-grid">${list.map(card).join("")}</ul></section>`)
     .join("");
   const count = r => people.filter(p => p.role === r).length;
-  $("#orgCount").textContent = `${people.length} people: ${count("Owner")} owner, ${count("Director")} director, ${count("Operations Manager (OM)")} operations manager, ${count("Sales Representative")} sales representatives`;
+  $("#orgCount").textContent = `${people.length} people: ${count("Owner")} owner, ${count("Campaign Advisor")} campaign advisor, ${count("Operations Manager (OM)")} operations manager, ${count("Sales Representative")} sales representatives`;
 }
 
 const drawer = $("#person");

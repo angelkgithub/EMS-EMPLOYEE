@@ -40,7 +40,7 @@ const RECORDINGS = [
   { title:"Sample call 3", agent:"[Agent name]", src:"", notes:"[What makes this call a good example]" }
 ];
 
-/* Leadership team. The Owner sits at the top, then the Director, then the OM, then the sales reps.
+/* Leadership team. The Owner sits at the top, then the Campaign Advisor, then the OM, then the sales reps.
    The Our Leadership Team page groups people by their dept (Leadership, Operations, Sales) in the order they appear here.
    P(name, role, dept, email, birthday, start, photo, extra)
    - birthday: the page shows month and day only. New entries store month and day only ("Apr 11").
@@ -52,7 +52,7 @@ const P=(name,role,dept,email,birthday,start,photo,extra)=>Object.assign({ name,
 
 const ORG = P("Josh","Owner","Leadership","","","","",{
   children:[
-    P("Roy Marc Caringal","Director","Leadership","roymarc.helpingdiabetics@gmail.com","May 31","","",{ phone:"+63 926 579 4877", children:[
+    P("Roy Marc Caringal","Campaign Advisor","Operations","roymarc.helpingdiabetics@gmail.com","May 31","","",{ phone:"+63 926 579 4877", children:[
       P("Arvin Jay Q. Romero","Operations Manager (OM)","Operations","arvin.helpingdiabetics@gmail.com","Apr 11","Aug 6, 2026","",{ phone:"+63 926 385 8341", designation:"Team Leader", children:[
         P("Shermalyn Salih","Sales Representative","Sales","lyn.helpingdiabetics@gmail.com","Oct 24","Oct 13, 2026","",{ phone:"+63 976 364 2286" }),
         P("John Saqlain Dela Cruz","Sales Representative","Sales","john.helpingdiabetics@gmail.com","Jan 2","Oct 13, 2026","",{ phone:"+63 945 708 9489" }),

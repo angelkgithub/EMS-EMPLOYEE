@@ -44,7 +44,7 @@ test.describe('org chart', () => {
     await expect(page.locator('#tree .person')).toHaveCount(7);
     const roles = await page.locator('#tree .person .who > span:not(.tag-new)').allTextContents();
     expect(roles.filter(r => r === 'Owner')).toHaveLength(1);
-    expect(roles.filter(r => r === 'Director')).toHaveLength(1);
+    expect(roles.filter(r => r === 'Campaign Advisor')).toHaveLength(1);
     expect(roles.filter(r => r === 'Operations Manager (OM)')).toHaveLength(1);
     expect(roles.filter(r => r === 'Sales Representative')).toHaveLength(4);
   });
