@@ -125,7 +125,7 @@
 
   /* Each tools group and team group is a container, so its cards adapt to the space they get, not to the window. */
   .group { margin-block-start: 30px; container-type: inline-size; }
-  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
   @container (max-width: 560px) { .cards { grid-template-columns: 1fr; } }
 
   .org-group { container-type: inline-size; & + .org-group { margin-block-start: 40px; } }
@@ -346,26 +346,37 @@
   }
   .group h2 { font-size: 1.05rem; color: var(--muted); font-weight: 650; margin-block-end: 12px; }
 
+  /* Tool cards (reference: Kombai "Rimevane" grid list): hairline card, icon tile, title and description, a divider, then chips and actions. */
   .tool {
-    background: var(--surface); border: 0; border-radius: var(--r-m); padding: 18px; display: flex; flex-direction: column; gap: 12px;
-    animation: cardIn .4s var(--ease) both; transition: background .2s;
-    &:hover { background: color-mix(in srgb, var(--surface) 70%, var(--soft)); }
+    display: flex; flex-direction: column; min-inline-size: 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-m); /* taste-skill-ignore: hairline card, from the client's reference */
+    animation: cardIn .4s var(--ease) both; transition: transform .22s var(--ease), border-color .22s var(--ease), background .22s;
+    &:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
     &.flash { animation: flash 1.4s var(--ease); }
-    p { color: var(--muted); font-size: .93rem; }
-    /* The Order Form card. Nested under .tool so it out-ranks the hover rule above without any extra weight. */
+    /* The Order Form card is filled navy. Nested under .tool so it out-ranks the hover rule above without extra weight. */
     &.tool-primary {
-      background: var(--accent); color: var(--on-accent);
-      &:hover { background: var(--accent-hover); }
-      .mark, .tool-type, p { color: color-mix(in srgb, var(--on-accent) 85%, transparent); }
+      background: var(--accent); border-color: var(--accent); color: var(--on-accent);
+      &:hover { background: var(--accent-hover); border-color: var(--accent-hover); }
+      .ico-tile { background: color-mix(in srgb, var(--on-accent) 14%, transparent); border-color: color-mix(in srgb, var(--on-accent) 30%, transparent); color: var(--on-accent); }
+      .tool-txt p, .tool-type, .chip-type { color: color-mix(in srgb, var(--on-accent) 85%, transparent); }
+      .chip-type { border-color: color-mix(in srgb, var(--on-accent) 30%, transparent); }
+      .tool-foot { border-color: color-mix(in srgb, var(--on-accent) 22%, transparent); }
       .icon-btn { border-color: color-mix(in srgb, var(--on-accent) 35%, transparent); color: var(--on-accent); }
       .icon-btn[aria-pressed="true"] { background: color-mix(in srgb, var(--on-accent) 16%, transparent); border-color: var(--on-accent); color: var(--on-accent); }
     }
   }
   @keyframes flash { 0%, 60% { outline: 3px solid var(--pulse); outline-offset: 3px; } 100% { outline: 3px solid transparent; outline-offset: 3px; } }
   @keyframes cardIn { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
-  .tool-top { display: flex; gap: 12px; align-items: flex-start; > div { flex: 1; min-inline-size: 0; } }
-  .tool-type { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; font-size: .82rem; color: var(--muted); font-weight: 560; }
-  .tool-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-block-start: auto; align-items: center; }
+  .tool-head { display: flex; align-items: flex-start; gap: 16px; padding: 22px 24px 18px; min-inline-size: 0; }
+  .ico-tile {
+    display: flex; align-items: center; justify-content: center; inline-size: 44px; block-size: 44px; flex: none; border-radius: 11px;
+    background: var(--soft); border: 1px solid var(--line); color: var(--accent); /* taste-skill-ignore: hairline card, from the client's reference */
+    svg { inline-size: 22px; block-size: 22px; }
+  }
+  .tool-txt { flex: 1; min-inline-size: 0; padding-block-start: 1px; h3 { font-size: .95rem; font-weight: 640; letter-spacing: -.016em; line-height: 1.3; } p { margin-block-start: 5px; font-size: .85rem; line-height: 1.45; color: var(--muted); } }
+  .tool-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 16px; margin-block-start: auto; padding: 16px 24px 20px; border-block-start: 1px solid var(--line); }
+  .tool-type { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; font-size: .8rem; color: var(--muted); font-weight: 560; }
+  .chip-type { display: inline-flex; align-items: center; gap: 6px; min-block-size: 26px; padding-inline: 8px; border: 1px solid var(--line); border-radius: 6px; font-size: .78rem; color: var(--muted); white-space: nowrap; svg { inline-size: 14px; block-size: 14px; } } /* taste-skill-ignore: hairline card, from the client's reference */
+  .tool-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-inline-start: auto; }
   .pending { font-size: .86rem; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; &::before { content: ""; inline-size: 8px; block-size: 8px; border-radius: 50%; background: #D9A21B; } }
 
   /* Training */

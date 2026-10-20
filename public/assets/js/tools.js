@@ -29,11 +29,13 @@ function toolCard(t, i) {
   } else {
     actions = `<span class="pending">Link not added yet</span>`;
   }
+  const kind = TYPE[t.type];
   return `<article class="tool${t.primary ? " tool-primary" : ""}" id="tool-${esc(t.id)}" style="animation-delay:${Math.min(i, 10) * 40}ms">
-      <div class="tool-top"><span class="mark"><svg><use href="#${toolIcon(t)}"/></svg></span><div><h3>${esc(t.name)}</h3><span class="tool-type">${TYPE[t.type].label}${statusTag(t)}</span></div>
-      <button class="icon-btn" type="button" data-action="pin" data-id="${esc(t.id)}" aria-pressed="${pinned}" aria-label="${pinned ? "Remove" : "Add"} ${esc(t.name)} ${pinned ? "from" : "to"} quick access"><svg><use href="#i-star"/></svg></button></div>
-      <p>${esc(t.desc)}</p>
-      <div class="tool-actions">${actions}</div></article>`;
+      <div class="tool-head"><span class="ico-tile" aria-hidden="true"><svg><use href="#${toolIcon(t)}"/></svg></span>
+        <div class="tool-txt"><h3>${esc(t.name)}</h3><p>${esc(t.desc)}</p></div>
+        <button class="icon-btn" type="button" data-action="pin" data-id="${esc(t.id)}" aria-pressed="${pinned}" aria-label="${pinned ? "Remove" : "Add"} ${esc(t.name)} ${pinned ? "from" : "to"} quick access"><svg><use href="#i-star"/></svg></button></div>
+      <div class="tool-foot"><span class="tool-type"><span class="chip-type"><svg aria-hidden="true"><use href="#${toolIcon(t)}"/></svg>${kind.label}</span>${statusTag(t)}</span>
+        <div class="tool-actions">${actions}</div></div></article>`;
 }
 
 function renderTools() {
