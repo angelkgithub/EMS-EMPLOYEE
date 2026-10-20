@@ -20,7 +20,9 @@ function renderRules() {
   $("#acc").innerHTML = D.RULE_SECTIONS.map(
     (s, i) => `<div class="acc-item"><button type="button" data-action="toggle" aria-expanded="false" aria-controls="accp-${i}" id="acch-${i}">${esc(s.title)}<svg><use href="#i-chev"/></svg></button><div class="acc-panel" id="accp-${i}" role="region" aria-labelledby="acch-${i}"><div><p>${esc(s.body)}</p></div></div></div>`
   ).join("");
-  $("#pdfView").innerHTML = pdf.url ? `<iframe src="${esc(href)}#view=FitH" title="MIL CITY House Rules PDF"></iframe>` : "";
+  $("#pdfView").innerHTML = pdf.url
+    ? `<iframe src="${esc(href)}#view=FitH" title="MIL CITY House Rules PDF"></iframe>`
+    : `<div class="empty">The house rules PDF hasn't been added yet. Ask your supervisor for a copy.</div>`;
 }
 
 export function initRules() {

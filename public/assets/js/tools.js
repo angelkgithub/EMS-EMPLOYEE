@@ -48,7 +48,7 @@ function renderTools() {
     .join("");
   $("#toolGroups").innerHTML =
     html ||
-    `<div class="empty" style="margin-top:24px">No tools match "${esc(query)}". <button class="btn btn-ghost" type="button" data-action="clear-filter" style="margin-left:8px">Clear filter</button></div>`;
+    `<div class="empty" style="margin-top:24px">No tools match “${esc(query)}”. <button class="btn btn-ghost" type="button" data-action="clear-filter" style="margin-left:8px">Clear filter</button></div>`;
 }
 
 function flashTool(id) {

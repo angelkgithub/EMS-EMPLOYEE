@@ -1,6 +1,7 @@
 import { $, delegate, esc, hasLink, NEWTAB, statusTag, toast, toolIcon, TYPE } from "./util.js";
 import { D, getPins, store } from "./store.js";
 import { go, setPending } from "./router.js";
+import { people } from "./org.js";
 
 const STEPS = [
   { label: "Read the house rules", href: "#rules" },
@@ -31,8 +32,10 @@ function renderSteps() {
   $("#steps").innerHTML = STEPS.map(
     (s, i) => `<li class="${done.includes(i) ? "done" : ""}"><span class="num" aria-hidden="true"></span><a class="step-link" href="${s.href}" ${s.focus ? `data-action="step-link" data-focus="${s.focus}"` : ""}>${s.label}</a><label class="check"><input type="checkbox" data-action="step-done" data-i="${i}" ${done.includes(i) ? "checked" : ""}><span class="sr">Mark "${s.label}" as done</span>Done</label></li>`
   ).join("");
-  $("#stepCount").textContent = `${done.length} of ${STEPS.length} done`;
-  $("#stepBar").style.width = (done.length / STEPS.length) * 100 + "%";
+  $("#stepBig").textContent = done.length;
+  $("#stepOf").textContent = "/" + STEPS.length;
+  $("#stepCount").textContent = done.length === STEPS.length ? "All start-here steps done" : "start-here steps done";
+  $("#stepBar").style.transform = `scaleX(${done.length / STEPS.length})`;
 }
 
 export function initHome() {
@@ -60,4 +63,7 @@ export function initHome() {
   });
   renderQuick();
   renderSteps();
+  $("#nTraining").textContent = D.VIDEOS.length + D.RECORDINGS.length;
+  $("#nTeam").textContent = people.length;
+  if (D.RULES_PDF.updated) $("#rulesMeta").textContent = `Updated ${D.RULES_PDF.updated}. Read and confirm them.`;
 }

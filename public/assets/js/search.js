@@ -38,7 +38,7 @@ export function initSearch() {
   let results = [], sel = 0;
 
   const isMac = /Mac|iPhone|iPad/.test(navigator.userAgentData?.platform || navigator.platform || "");
-  $("#kbd").textContent = isMac ? "⌘ K" : "Ctrl K";
+  $("#kbd").textContent = isMac ? "⌘ K" : "Ctrl K";
 
   function render() {
     const q = input.value.trim().toLowerCase();
@@ -46,7 +46,7 @@ export function initSearch() {
     sel = Math.min(sel, Math.max(0, results.length - 1));
     list.innerHTML = results.length
       ? results.map((it, i) => `<li role="option" id="po-${i}" aria-selected="${i === sel}" data-i="${i}"><span class="mark"><svg><use href="#${it.icon}"/></svg></span><span>${esc(it.label)}</span><small>${esc(it.kind)}</small></li>`).join("")
-      : `<li class="pal-none" role="presentation">No results for "${esc(input.value)}"</li>`;
+      : `<li class="pal-none" role="presentation">No results for “${esc(input.value)}”</li>`;
     input.setAttribute("aria-activedescendant", results.length ? "po-" + sel : "");
   }
   const move = delta => {

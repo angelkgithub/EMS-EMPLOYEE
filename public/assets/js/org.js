@@ -43,6 +43,11 @@ const card = p => `<li><button class="person" type="button" data-action="open-pe
 function renderOrg() {
   const groups = new Map();
   people.forEach(p => groups.set(p.dept || "Team", [...(groups.get(p.dept || "Team") || []), p]));
+  if (!people.length) {
+    $("#tree").innerHTML = `<div class="empty">No one has been added to the leadership team yet.</div>`;
+    $("#orgCount").textContent = "";
+    return;
+  }
   $("#tree").innerHTML = [...groups]
     .map(([dept, list]) => `<section class="org-group" aria-labelledby="og-${esc(dept)}"><h2 id="og-${esc(dept)}">${esc(dept)}</h2><ul class="team-grid">${list.map(card).join("")}</ul></section>`)
     .join("");

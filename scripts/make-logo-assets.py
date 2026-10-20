@@ -6,6 +6,7 @@ SRC='brand-source/milcity-logo-sheet.png'
 OUT=sys.argv[1]
 im=Image.open(SRC).convert('RGB')
 P=10
+SKY=(955,98,1425,272)   # skyline scene inside the round badge, without the ring
 boxes={'stack':(21,108,818,596),'badge':(836,14,1509,624),'word':(168,646,1376,936),'cross':(644,646,866,868)}
 def crop(k):
     if k=='cross':
@@ -45,6 +46,23 @@ al=to_alpha(crop('stack')); sizes['stack']=save(al,'milcity-stack-light.png',480
 # word (top bar, shown 142 wide) and badge (404 page, shown 180 wide)
 for k,w1 in (('word',142),('badge',180)):
     al=to_alpha(crop(k)); save_set(al,f'milcity-{k}-light',w1); save_set(dark(al),f'milcity-{k}-dark',w1)
+# Home skyline band: the city scene from the badge, shown about 400 px wide (source is 470 px, so no 2x)
+def save_scene(arr,base):
+    img=Image.fromarray(arr,'RGBA')
+    img.save(f'{OUT}/{base}.webp',quality=90,method=6); img.save(f'{OUT}/{base}.png',optimize=True)
+scene=im.crop(SKY); sky=to_alpha(scene)
+# drop the pale sky so only the buildings and bridge remain; they then sit on any background
+lum=np.asarray(scene.convert('L')).astype(float)/255
+sky[...,3]=(sky[...,3]*np.clip((0.78-lum-0.0)/0.30,0,1)).astype(np.uint8)
+# erase the two bits of the badge ring that fall in the top corners of the crop
+w_,h_=SKY[2]-SKY[0],SKY[3]-SKY[1]; m=Image.new('L',(w_,h_),255); md=ImageDraw.Draw(m)
+md.polygon([(0,0),(118,0),(0,88)],fill=0); md.polygon([(w_,0),(w_-118,0),(w_,88)],fill=0)
+sky[...,3]=(sky[...,3].astype(float)*np.asarray(m)/255).astype(np.uint8)
+# soften the left and bottom edges so the scene melts into the tile
+xs=np.clip(np.arange(w_)/(0.20*w_),0,1)[None,:]*np.clip((w_-np.arange(w_))/(0.06*w_),0,1)[None,:]
+ys=np.clip((h_-np.arange(h_))/(0.16*h_),0,1)[:,None]
+sky[...,3]=(sky[...,3].astype(float)*xs*ys).astype(np.uint8)
+save_scene(sky,'milcity-skyline-light'); save_scene(dark(sky),'milcity-skyline-dark')
 # icons: round skyline badge on white rounded square
 cross=Image.fromarray(to_alpha(crop('badge')),'RGBA')
 def icon(size,pad=0.08,round_=True):
