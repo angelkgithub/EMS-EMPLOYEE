@@ -31,9 +31,20 @@ def dark(arr):
 def save(arr,name,width):
     img=Image.fromarray(arr,'RGBA'); h=round(img.height*width/img.width)
     img.resize((width,h),Image.LANCZOS).save(f'{OUT}/{name}',optimize=True); return (width,h)
+def save_set(arr,base,w1):
+    """Logo shown at w1 CSS pixels: WebP at 1x and 2x for srcset, plus a 2x PNG fallback."""
+    img=Image.fromarray(arr,'RGBA')
+    for scale in (1,2):
+        w=w1*scale; h=round(img.height*w/img.width)
+        img.resize((w,h),Image.LANCZOS).save(f'{OUT}/{base}-{w}.webp',quality=90,method=6)
+    w=w1*2; h=round(img.height*w/img.width)
+    img.resize((w,h),Image.LANCZOS).save(f'{OUT}/{base}-{w}.png',optimize=True)
 sizes={}
-for k,w in (('stack',480),('word',640),('badge',480)):
-    al=to_alpha(crop(k)); sizes[k]=save(al,f'milcity-{k}-light.png',w); save(dark(al),f'milcity-{k}-dark.png',w)
+# stack: not used by the pages any more, kept for reuse
+al=to_alpha(crop('stack')); sizes['stack']=save(al,'milcity-stack-light.png',480); save(dark(al),'milcity-stack-dark.png',480)
+# word (top bar, shown 142 wide) and badge (404 page, shown 180 wide)
+for k,w1 in (('word',142),('badge',180)):
+    al=to_alpha(crop(k)); save_set(al,f'milcity-{k}-light',w1); save_set(dark(al),f'milcity-{k}-dark',w1)
 # icons: round skyline badge on white rounded square
 cross=Image.fromarray(to_alpha(crop('badge')),'RGBA')
 def icon(size,pad=0.08,round_=True):

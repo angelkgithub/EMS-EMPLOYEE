@@ -24,7 +24,7 @@ Contrast (WCAG): ink on ground 15.4:1, muted on ground 6.5:1, white on navy 14.0
 
 ## 3. Typography
 
-One family: **Archivo** (Google Fonts, `display=swap`).
+One family: **Archivo**, self-hosted (`assets/fonts/archivo-latin.woff2`, variable weight and width, Latin subset, `display=swap`, preloaded). No outside font requests.
 
 | Level | Size | Weight |
 |---|---|---|

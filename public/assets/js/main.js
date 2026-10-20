@@ -22,3 +22,4 @@ initOrg();
 initRules();
 initSearch();
 initRouter();
+document.documentElement.classList.add("ready");

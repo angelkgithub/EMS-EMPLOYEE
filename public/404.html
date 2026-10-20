@@ -8,15 +8,15 @@
 <meta name="color-scheme" content="light dark">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..800;1,62..125,400..800&display=swap" rel="stylesheet">
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/archivo-latin.woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/styles.css">
 <script src="/assets/js/theme.js"></script>
 </head>
 <body>
 <main class="nf">
   <div>
-    <img class="logo-l" src="/assets/brand/milcity-badge-light.png" alt="MIL CITY Medical" width="180" height="164">
-    <img class="logo-d" src="/assets/brand/milcity-badge-dark.png" alt="" width="180" height="164">
+    <picture class="logo-l"><source type="image/webp" srcset="/assets/brand/milcity-badge-light-180.webp 1x, /assets/brand/milcity-badge-light-360.webp 2x"><img src="/assets/brand/milcity-badge-light-360.png" alt="MIL CITY Medical" width="180" height="164"></picture>
+    <picture class="logo-d"><source type="image/webp" srcset="/assets/brand/milcity-badge-dark-180.webp 1x, /assets/brand/milcity-badge-dark-360.webp 2x"><img src="/assets/brand/milcity-badge-dark-360.png" alt="" width="180" height="164"></picture>
     <h1>Page not found</h1>
     <p class="muted">That link doesn't lead anywhere. Check the address, or head back to the hub.</p>
     <a class="btn btn-primary" href="/">Go to Team Hub</a>

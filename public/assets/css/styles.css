@@ -1,5 +1,15 @@
 /* MIL CITY Team Hub styles. Roles, contrast and components are documented in DESIGN.md.
    Order of the layers decides who wins, so no rule needs a heavier selector or !important to override another. */
+/* Archivo (SIL Open Font License), self-hosted: one variable file, Latin subset, weights 400-800, widths 62-125. */
+@font-face {
+  font-family: "Archivo";
+  font-style: normal;
+  font-weight: 400 800;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url("/assets/fonts/archivo-latin.woff2") format("woff2");
+}
+
 @layer tokens, base, layout, components, utilities;
 
 /* ---------- Tokens (from the MIL CITY Medical logo: navy, pulse red, silver) ----------
@@ -84,11 +94,14 @@
   .top-actions { justify-self: end; display: flex; align-items: center; gap: 10px; }
 
   .content { flex: 1; margin-inline: auto; padding: clamp(24px, 4vw, 40px) var(--gutter) 64px; inline-size: 100%; max-inline-size: 1200px; }
+  /* Hidden until the page content is drawn, so the footer doesn't jump down while the scripts fill the page. */
   .foot {
+    visibility: hidden;
     display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px;
     padding: 20px var(--gutter) calc(env(safe-area-inset-bottom, 0px) + 20px);
     color: var(--muted); font-size: .88rem;
   }
+  .ready .foot { visibility: visible; }
 
   .page { display: none; &.active { display: block; } }
   ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .22s; animation-timing-function: var(--ease); }
@@ -198,7 +211,8 @@
     svg { inline-size: 18px; block-size: 18px; flex: none; }
   }
   @media (max-width: 900px) {
-    .find { inline-size: 44px; min-block-size: 44px; padding: 0; justify-content: center; span, kbd { display: none; } }
+    /* The word stays for screen readers: the button keeps its name when only the icon shows. */
+    .find { inline-size: 44px; min-block-size: 44px; padding: 0; justify-content: center; kbd { display: none; } span { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; } }
   }
 
   .panel { background: var(--surface); border-radius: var(--r-l); padding: clamp(18px, 2.5vw, 28px); container-type: inline-size; }

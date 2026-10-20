@@ -106,3 +106,10 @@ Starred tools now use a new saved key (`pins-v2`), so everyone starts with the f
 - Native CSS nesting, container queries (tool groups, quick tiles, recordings, team cards), logical properties, `100dvh`, `text-wrap: balance` on headings and `pretty` on paragraphs.
 - Removed unused rules (`.placeholder`, `.spacer`, the old `--shadow` and `--side` tokens).
 - Checked: all 16 tests pass; taste-skill lint 0 FAIL (the "The team" label is a marked exception, requested by the client); screenshots of all five routes at 1440 and 390, light and dark, are pixel-identical to before the change.
+
+### Phase 4: performance and assets
+- Archivo is self-hosted as one variable woff2 (Latin subset, 90 KB, preloaded, `font-display: swap`). Google Fonts links and their `vercel.json` CSP entries are gone, so the hub no longer breaks on networks that block Google. Italics were dropped (the design doesn't use them).
+- Logos are served with `<picture>`: WebP at 1x and 2x with a PNG fallback and exact `width`/`height`. `scripts/make-logo-assets.py` now writes `milcity-word-*` (142 px, top bar) and `milcity-badge-*` (180 px, 404 page). The unused stack-logo preload and the old 640/480 px PNGs were removed.
+- Fixed two things Lighthouse found on phones: the search button lost its name when only the icon shows (the word is now visually hidden, not removed), and the footer jumped as the scripts filled the page (it now appears once the page is drawn, via a `ready` class on `<html>`).
+- YouTube thumbnails and photos are `loading="lazy"`; the video is still a click-to-load facade.
+- Lighthouse (local, headless): mobile 99 performance / 100 accessibility / 100 best practices; desktop 100 / 100 / 100; layout shift 0. No requests leave the site. 16/16 tests pass, lint 0 FAIL.

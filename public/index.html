@@ -21,11 +21,8 @@
 <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest" crossorigin="use-credentials">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,400..800;1,62..125,400..800&display=swap" rel="stylesheet">
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/archivo-latin.woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/styles.css">
-<link rel="preload" as="image" href="/assets/brand/milcity-stack-light.png" media="(min-width:901px) and (prefers-color-scheme:light)">
 <script src="/assets/js/data.js" defer></script>
 <script type="module" src="/assets/js/main.js"></script>
 <script src="/assets/js/theme.js"></script>
@@ -68,8 +65,8 @@
   <div class="main">
     <header class="topbar" id="topbar">
       <a class="top-logo" href="#home" aria-label="MIL CITY Team Hub home">
-        <img class="logo-l" src="/assets/brand/milcity-word-light.png" alt="" width="142" height="36">
-        <img class="logo-d" src="/assets/brand/milcity-word-dark.png" alt="" width="142" height="36">
+        <picture class="logo-l"><source type="image/webp" srcset="/assets/brand/milcity-word-light-142.webp 1x, /assets/brand/milcity-word-light-284.webp 2x"><img src="/assets/brand/milcity-word-light-284.png" alt="" width="142" height="36"></picture>
+        <picture class="logo-d"><source type="image/webp" srcset="/assets/brand/milcity-word-dark-142.webp 1x, /assets/brand/milcity-word-dark-284.webp 2x"><img src="/assets/brand/milcity-word-dark-284.png" alt="" width="142" height="36"></picture>
       </a>
       <nav class="nav" id="nav" popover aria-label="Main">
         <a href="#home"><svg aria-hidden="true"><use href="#i-home"/></svg>Home</a>
