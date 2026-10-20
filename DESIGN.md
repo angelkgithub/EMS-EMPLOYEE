@@ -1,6 +1,6 @@
 # DESIGN.md: MIL CITY Team Hub
 
-The source of truth for how the hub looks. Tokens live at the top of `public/assets/css/styles.css`.
+The source of truth for how the hub looks. Tokens live at the top of `public/assets/css/styles.css`, written once each as `light-dark(light, dark)`. Styles are in cascade layers, in this order: `tokens, base, layout, components, utilities`. A later layer wins, so nothing needs `!important` or a heavier selector. Component rules are nested, and tool cards, quick tiles, recordings and team cards respond to the width of their container, not the window.
 
 ## 1. Visual theme
 

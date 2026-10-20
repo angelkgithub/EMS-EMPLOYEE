@@ -99,3 +99,10 @@ Starred tools now use a new saved key (`pins-v2`), so everyone starts with the f
 
 ### Leadership page: Campaign Advisor
 - Roy Marc Caringal's title is now "Campaign Advisor" and he sits in the Operations group beside Arvin. Leadership now shows only Josh.
+
+### Phase 3: modern CSS
+- Cascade layers (`tokens, base, layout, components, utilities`); every rule lives in a layer. The Order Form card no longer needs a heavier selector, and the `!important` hacks are gone (only `[hidden]` and reduced motion keep it).
+- One token set with `light-dark()` and `color-scheme` (`light dark`, overridden by `data-theme`). The three duplicated dark-mode blocks are deleted. Logo swap still hides one of two files with a small `data-theme` / `prefers-color-scheme` rule, because `<img>` sources can't use `light-dark()`.
+- Native CSS nesting, container queries (tool groups, quick tiles, recordings, team cards), logical properties, `100dvh`, `text-wrap: balance` on headings and `pretty` on paragraphs.
+- Removed unused rules (`.placeholder`, `.spacer`, the old `--shadow` and `--side` tokens).
+- Checked: all 16 tests pass; taste-skill lint 0 FAIL (the "The team" label is a marked exception, requested by the client); screenshots of all five routes at 1440 and 390, light and dark, are pixel-identical to before the change.
